@@ -1,0 +1,78 @@
+{
+  "name": "@ptl/lattice-visualizer",
+  "version": "0.0.1",
+  "description": "React/D3 visualization component for PTL type lattices",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@ptl/shared": "workspace:*",
+    "d3": "^7.8.5",
+    "d3-hierarchy": "^3.1.2",
+    "d3-zoom": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/d3-hierarchy": "^3.1.7",
+    "@types/d3-zoom": "^3.0.8",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.3.3",
+    "tsup": "^8.0.1",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamthegreatdestroyer/PTL.git",
+    "directory": "packages/lattice-visualizer"
+  },
+  "homepage": "https://github.com/iamthegreatdestroyer/PTL#readme",
+  "bugs": {
+    "url": "https://github.com/iamthegreatdestroyer/PTL/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ptl",
+    "visualization",
+    "lattice",
+    "types",
+    "d3",
+    "react"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@ptl/examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Example code for PTL - Probabilistic Type Lattice",
+  "scripts": {
+    "example:basic": "ptl analyze basic/ --format=pretty",
+    "example:functions": "ptl analyze functions/ --format=pretty",
+    "example:objects": "ptl analyze objects/ --format=pretty",
+    "example:generics": "ptl analyze generics/ --format=pretty",
+    "example:react": "ptl analyze react-app/ --format=pretty",
+    "example:all": "ptl analyze . --format=pretty",
+    "report": "ptl report . --format=detailed --output=report.md"
+  },
+  "dependencies": {
+    "@ptl/cli": "workspace:*",
+    "@ptl/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.45",
+    "typescript": "~5.3.3"
+  }
+}

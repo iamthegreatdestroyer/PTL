@@ -1,0 +1,219 @@
+{
+  "name": "ptl-vscode",
+  "displayName": "PTL - Probabilistic Type Lattice",
+  "description": "Bayesian type inference with confidence intervals for TypeScript",
+  "version": "0.0.1",
+  "publisher": "ptl",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "typescript",
+    "type-inference",
+    "bayesian",
+    "static-analysis"
+  ],
+  "activationEvents": [
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ptl.analyze",
+        "title": "Analyze Current File",
+        "category": "PTL"
+      },
+      {
+        "command": "ptl.analyzeWorkspace",
+        "title": "Analyze Workspace",
+        "category": "PTL"
+      },
+      {
+        "command": "ptl.showTypeInfo",
+        "title": "Show Type Information",
+        "category": "PTL"
+      },
+      {
+        "command": "ptl.toggleInlineHints",
+        "title": "Toggle Inline Confidence Hints",
+        "category": "PTL"
+      },
+      {
+        "command": "ptl.openLatticeView",
+        "title": "Open Type Lattice Visualization",
+        "category": "PTL"
+      }
+    ],
+    "configuration": {
+      "title": "PTL - Probabilistic Type Lattice",
+      "properties": {
+        "ptl.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable PTL type analysis"
+        },
+        "ptl.configPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to PTL configuration file"
+        },
+        "ptl.showInlineHints": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show inline confidence hints"
+        },
+        "ptl.minConfidenceForHints": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum confidence level to show hints"
+        },
+        "ptl.highlightLowConfidence": {
+          "type": "boolean",
+          "default": true,
+          "description": "Highlight low-confidence inferences"
+        },
+        "ptl.lowConfidenceThreshold": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Threshold below which types are considered low-confidence"
+        },
+        "ptl.diagnostics.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show diagnostics for low-confidence types"
+        },
+        "ptl.diagnostics.severity": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "information",
+            "hint"
+          ],
+          "default": "information",
+          "description": "Severity level for PTL diagnostics"
+        },
+        "ptl.inference.maxIterations": {
+          "type": "number",
+          "default": 100,
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "Maximum iterations for inference"
+        },
+        "ptl.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Trace communication with PTL server"
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "ptlTypeExplorer",
+          "name": "PTL Types",
+          "when": "ptl.enabled"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ptl",
+          "title": "PTL",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "ptl.showTypeInfo",
+          "group": "navigation",
+          "when": "editorLangId == typescript || editorLangId == typescriptreact"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "ptl.analyze",
+          "when": "editorLangId == typescript || editorLangId == typescriptreact"
+        }
+      ]
+    },
+    "colors": [
+      {
+        "id": "ptl.highConfidence",
+        "description": "Color for high confidence types",
+        "defaults": {
+          "dark": "#4EC9B0",
+          "light": "#267F99",
+          "highContrast": "#4EC9B0"
+        }
+      },
+      {
+        "id": "ptl.mediumConfidence",
+        "description": "Color for medium confidence types",
+        "defaults": {
+          "dark": "#DCDCAA",
+          "light": "#795E26",
+          "highContrast": "#DCDCAA"
+        }
+      },
+      {
+        "id": "ptl.lowConfidence",
+        "description": "Color for low confidence types",
+        "defaults": {
+          "dark": "#F48771",
+          "light": "#A31515",
+          "highContrast": "#F48771"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run build",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist out",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies"
+  },
+  "dependencies": {
+    "@ptl/core": "workspace:*",
+    "@ptl/config": "workspace:*",
+    "@ptl/shared": "workspace:*",
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.22.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamthegreatdestroyer/PTL.git",
+    "directory": "packages/vscode-extension"
+  },
+  "license": "MIT"
+}

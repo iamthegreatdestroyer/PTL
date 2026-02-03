@@ -1,0 +1,106 @@
+# ===============================
+# PTL - Security Scanning
+# ===============================
+name: Security
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+    schedule:
+        # Run daily at 6:00 AM UTC
+        - cron: "0 6 * * *"
+    workflow_dispatch:
+
+permissions:
+    contents: read
+    security-events: write
+    actions: read
+
+jobs:
+    # =============================
+    # Dependency Audit
+    # =============================
+    dependency-audit:
+        name: Dependency Audit
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@v4
+
+            - name: 📦 Setup pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: 🟢 Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - name: 📥 Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 🔍 Audit dependencies
+              run: pnpm audit --audit-level=moderate
+              continue-on-error: true
+
+    # =============================
+    # CodeQL Analysis
+    # =============================
+    codeql:
+        name: CodeQL Analysis
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                language: ["javascript-typescript"]
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@v4
+
+            - name: 🔧 Initialize CodeQL
+              uses: github/codeql-action/init@v3
+              with:
+                  languages: ${{ matrix.language }}
+                  queries: +security-and-quality
+
+            - name: 🔍 Perform CodeQL Analysis
+              uses: github/codeql-action/analyze@v3
+              with:
+                  category: "/language:${{ matrix.language }}"
+
+    # =============================
+    # License Check
+    # =============================
+    license-check:
+        name: License Compliance
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@v4
+
+            - name: 📦 Setup pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: 🟢 Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - name: 📥 Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 📜 Check licenses
+              run: |
+                  npx license-checker --production --summary --failOn "GPL-3.0;AGPL-3.0;LGPL-3.0"
+              continue-on-error: true

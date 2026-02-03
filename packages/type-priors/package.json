@@ -1,0 +1,63 @@
+{
+  "name": "@ptl/type-priors",
+  "version": "0.0.1",
+  "description": "Pre-trained type frequency priors for PTL Bayesian inference",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./data": {
+      "types": "./dist/data.d.ts",
+      "import": "./dist/data.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "generate": "tsx scripts/generate-priors.ts"
+  },
+  "dependencies": {
+    "@ptl/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "tsup": "^8.0.1",
+    "vitest": "^1.2.0",
+    "tsx": "^4.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamthegreatdestroyer/PTL.git",
+    "directory": "packages/type-priors"
+  },
+  "homepage": "https://github.com/iamthegreatdestroyer/PTL#readme",
+  "bugs": {
+    "url": "https://github.com/iamthegreatdestroyer/PTL/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ptl",
+    "types",
+    "priors",
+    "bayesian",
+    "typescript"
+  ]
+}

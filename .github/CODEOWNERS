@@ -1,0 +1,46 @@
+# CODEOWNERS - PTL Repository
+
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+
+- @iamthegreatdestroyer
+
+# Core package - Bayesian inference engine
+
+/packages/core/ @iamthegreatdestroyer
+
+# Configuration and shared utilities
+
+/packages/config/ @iamthegreatdestroyer
+/packages/shared/ @iamthegreatdestroyer
+
+# Type priors database
+
+/packages/type-priors/ @iamthegreatdestroyer
+
+# Visualization
+
+/packages/lattice-visualizer/ @iamthegreatdestroyer
+
+# Applications
+
+/apps/cli/ @iamthegreatdestroyer
+/apps/vscode/ @iamthegreatdestroyer
+/apps/web/ @iamthegreatdestroyer
+/apps/runtime-observer/ @iamthegreatdestroyer
+
+# CI/CD and Infrastructure
+
+/.github/ @iamthegreatdestroyer
+
+# Documentation
+
+/docs/ @iamthegreatdestroyer
+
+# Root configuration files
+
+/_.json @iamthegreatdestroyer
+/_.yaml @iamthegreatdestroyer
+/_.js @iamthegreatdestroyer
+/_.ts @iamthegreatdestroyer

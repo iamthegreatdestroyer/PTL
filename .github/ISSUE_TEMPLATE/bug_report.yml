@@ -1,0 +1,115 @@
+name: Bug Report
+description: Report a bug or unexpected behavior in PTL
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees:
+  - iamthegreatdestroyer
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        Please provide as much detail as possible to help us investigate.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe the bug...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Run command '...'
+        2. With file '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+    validations:
+      required: true
+
+  - type: textarea
+    id: code-sample
+    attributes:
+      label: Code Sample
+      description: Minimal code sample that reproduces the issue
+      render: typescript
+      placeholder: |
+        // Your code here
+        const result = ptl.infer(code);
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which PTL component is affected?
+      options:
+        - "@ptl/core"
+        - "@ptl/cli"
+        - "@ptl/vscode"
+        - "@ptl/web"
+        - "@ptl/runtime-observer"
+        - "@ptl/type-priors"
+        - "@ptl/lattice-visualizer"
+        - "@ptl/shared"
+        - "@ptl/config"
+        - "Other"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: PTL Version
+      description: What version of PTL are you using?
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js Version
+      description: What version of Node.js are you using?
+      placeholder: "20.10.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other context about the problem (error messages, logs, screenshots)

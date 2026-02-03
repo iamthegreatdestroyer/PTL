@@ -1,0 +1,12 @@
+# PTL Monorepo Workspace Configuration
+# https://pnpm.io/pnpm-workspace_yaml
+
+packages:
+  # Applications
+  - "apps/*"
+
+  # Shared packages
+  - "packages/*"
+
+  # Documentation (if using docs-as-package pattern)
+  - "docs"

@@ -1,0 +1,166 @@
+# ================================
+# PTL - Probabilistic Type Lattice
+# .gitignore
+# ================================
+
+# ===============================
+# Dependencies
+# ===============================
+node_modules/
+**/node_modules/
+
+# ===============================
+# Build Outputs
+# ===============================
+dist/
+**/dist/
+build/
+**/build/
+out/
+**/out/
+.next/
+**/.next/
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# ===============================
+# Turbo
+# ===============================
+.turbo/
+**/.turbo/
+
+# ===============================
+# Cache
+# ===============================
+.cache/
+**/.cache/
+*.cache
+
+# ===============================
+# Test & Coverage
+# ===============================
+coverage/
+**/coverage/
+.nyc_output/
+**/.nyc_output/
+
+# ===============================
+# Logs
+# ===============================
+logs/
+**/logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# ===============================
+# Environment Variables
+# ===============================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Keep example env files
+!.env.example
+!.env.*.example
+
+# ===============================
+# IDE & Editors
+# ===============================
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ===============================
+# OS Generated Files
+# ===============================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ===============================
+# Benchmark Results (optional)
+# ===============================
+# benchmark-results/
+
+# ===============================
+# Temporary Files
+# ===============================
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# ===============================
+# VS Code Extension
+# ===============================
+apps/vscode/*.vsix
+apps/vscode/out/
+apps/vscode/.vscode-test/
+
+# ===============================
+# Runtime Observer
+# ===============================
+apps/runtime-observer/instrumented/
+
+# ===============================
+# Documentation
+# ===============================
+docs/.docusaurus/
+docs/build/
+
+# ===============================
+# Secrets & Credentials
+# ===============================
+*.pem
+*.key
+*.p12
+*.pfx
+credentials/
+secrets/
+
+# ===============================
+# Optional: Debug Files
+# ===============================
+# *.map
+
+# ===============================
+# PTL-Specific
+# ===============================
+# Learned priors cache (user-specific)
+.ptl-cache/
+**/.ptl-cache/
+
+# Analysis results (regenerated)
+# Keep this commented if you want to track analysis results
+# .ptl/
+
+# Local config overrides
+ptl.local.json
+.ptlrc.local
+.history/

@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Monaco editor customizations */
+.monaco-editor {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Confidence badges */
+.confidence-badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+}
+
+.confidence-high {
+  @apply bg-ptl-high/20 text-ptl-high;
+}
+
+.confidence-medium {
+  @apply bg-ptl-medium/20 text-ptl-medium;
+}
+
+.confidence-low {
+  @apply bg-ptl-low/20 text-ptl-low;
+}
+
+/* Type cards */
+.type-card {
+  @apply bg-ptl-surface border border-ptl-border rounded-lg p-4 transition-all hover:border-ptl-accent;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3e3e42;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4e4e52;
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}

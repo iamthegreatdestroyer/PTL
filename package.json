@@ -1,0 +1,89 @@
+{
+  "name": "ptl-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Probabilistic Type Lattice - Bayesian type inference with confidence intervals",
+  "author": {
+    "name": "Stevo",
+    "email": "sgbilod@iamthegreatdestroyer.com"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamthegreatdestroyer/PTL.git"
+  },
+  "homepage": "https://github.com/iamthegreatdestroyer/PTL#readme",
+  "bugs": {
+    "url": "https://github.com/iamthegreatdestroyer/PTL/issues"
+  },
+  "keywords": [
+    "typescript",
+    "type-inference",
+    "bayesian",
+    "static-analysis",
+    "type-lattice",
+    "probabilistic-types",
+    "dirichlet-distribution",
+    "confidence-intervals"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "test:turbo": "turbo run test",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rimraf node_modules",
+    "clean:cache": "turbo daemon clean",
+    "benchmark": "turbo run benchmark",
+    "docs:build": "turbo run docs:build",
+    "docs:dev": "turbo run docs:dev",
+    "prepare": "husky install",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=!@ptl/web && changeset publish",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "rimraf": "^5.0.5",
+    "turbo": "^1.11.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0",
+    "@vitest/coverage-v8": "^1.1.0",
+    "@vitest/ui": "^1.1.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

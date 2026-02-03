@@ -1,0 +1,29 @@
+/**
+ * PTL configuration for examples
+ */
+{
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules", "dist", "build", "*.d.ts"],
+  "analysis": {
+    "strict": false,
+    "minConfidence": 0.5,
+    "includeLowConfidence": true
+  },
+  "priors": {
+    "useBuiltIn": true,
+    "useNamingConventions": true,
+    "useUsagePatterns": true
+  },
+  "output": {
+    "format": "pretty",
+    "showEvidence": true,
+    "groupByFile": true
+  },
+  "confidence": {
+    "thresholds": {
+      "high": 0.85,
+      "medium": 0.6,
+      "low": 0.3
+    }
+  }
+}

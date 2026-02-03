@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/iamthegreatdestroyer/PTL/tree/main/docs
+    about: Check the documentation before opening an issue
+  - name: 💬 Discussions
+    url: https://github.com/iamthegreatdestroyer/PTL/discussions
+    about: Ask questions and discuss PTL with the community
+  - name: 📧 Security Issue
+    url: https://github.com/iamthegreatdestroyer/PTL/security/advisories/new
+    about: Report security vulnerabilities privately

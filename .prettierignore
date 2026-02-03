@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+out/
+**/out/
+.next/
+**/.next/
+
+# Cache
+.turbo/
+**/.turbo/
+.cache/
+**/.cache/
+
+# Coverage
+coverage/
+**/coverage/
+
+# Generated files
+*.d.ts
+*.generated.ts
+
+# Package manager
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Changesets (preserve formatting)
+.changeset/
+
+# Prior data (preserve JSON formatting)
+prior-data/

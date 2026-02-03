@@ -1,0 +1,63 @@
+{
+  "name": "@ptl/config",
+  "version": "0.0.1",
+  "description": "Configuration loading and validation for PTL",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "import": "./dist/schema.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@ptl/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "tsup": "^8.0.1",
+    "vitest": "^1.2.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamthegreatdestroyer/PTL.git",
+    "directory": "packages/config"
+  },
+  "homepage": "https://github.com/iamthegreatdestroyer/PTL#readme",
+  "bugs": {
+    "url": "https://github.com/iamthegreatdestroyer/PTL/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ptl",
+    "config",
+    "typescript",
+    "configuration"
+  ]
+}

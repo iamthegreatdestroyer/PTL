@@ -1,0 +1,210 @@
+# ===============================
+# PTL - Pull Request Validation
+# ===============================
+name: PR Check
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened, labeled]
+        branches: [main, develop]
+
+concurrency:
+    group: pr-${{ github.event.pull_request.number }}
+    cancel-in-progress: true
+
+jobs:
+    # =============================
+    # PR Title Convention
+    # =============================
+    title-check:
+        name: PR Title
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 🔍 Check PR title convention
+              uses: amannn/action-semantic-pull-request@v5
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  types: |
+                      feat
+                      fix
+                      docs
+                      style
+                      refactor
+                      perf
+                      test
+                      chore
+                      ci
+                      build
+                      revert
+                  scopes: |
+                      core
+                      cli
+                      vscode
+                      web
+                      shared
+                      config
+                      priors
+                      lattice
+                      deps
+                      release
+                  requireScope: false
+                  subjectPattern: ^[a-z].+$
+                  subjectPatternError: |
+                      PR title must start with lowercase letter
+
+    # =============================
+    # Quick Validation
+    # =============================
+    quick-check:
+        name: Quick Validation
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: 📦 Setup pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: 🟢 Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - name: 📥 Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 🎨 Check formatting
+              run: pnpm format:check
+
+            - name: 📝 Lint changed files
+              run: pnpm lint
+
+            - name: 🔍 Type check
+              run: pnpm typecheck
+
+    # =============================
+    # Changeset Validation
+    # =============================
+    changeset:
+        name: Changeset
+        runs-on: ubuntu-latest
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'skip-changeset') }}
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: 📦 Setup pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: 🟢 Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - name: 📥 Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 📋 Check for changesets
+              run: |
+                  # Check if this PR has changesets
+                  if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README.md)" ]; then
+                    echo "⚠️  No changeset found. If this PR includes user-facing changes,"
+                    echo "   please run 'pnpm changeset' to create one."
+                    echo "   Add the 'skip-changeset' label to bypass this check."
+                  else
+                    echo "✅ Changeset found"
+                  fi
+
+    # =============================
+    # Size Check
+    # =============================
+    size:
+        name: Bundle Size
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@v4
+
+            - name: 📦 Setup pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: 🟢 Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - name: 📥 Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 🏗️ Build
+              run: pnpm build
+
+            - name: 📊 Report bundle sizes
+              run: |
+                  echo "## Bundle Sizes" >> $GITHUB_STEP_SUMMARY
+                  echo "" >> $GITHUB_STEP_SUMMARY
+                  echo "| Package | Size |" >> $GITHUB_STEP_SUMMARY
+                  echo "|---------|------|" >> $GITHUB_STEP_SUMMARY
+
+                  for pkg in packages/*/dist; do
+                    if [ -d "$pkg" ]; then
+                      size=$(du -sh "$pkg" | cut -f1)
+                      name=$(echo "$pkg" | sed 's|packages/||' | sed 's|/dist||')
+                      echo "| @ptl/$name | $size |" >> $GITHUB_STEP_SUMMARY
+                    fi
+                  done
+
+    # =============================
+    # Test Coverage Diff
+    # =============================
+    coverage-diff:
+        name: Coverage Diff
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: 📦 Setup pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: 🟢 Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - name: 📥 Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 📊 Run tests with coverage
+              run: pnpm test:coverage
+              continue-on-error: true
+
+            - name: 📋 Report coverage
+              run: |
+                  echo "## Test Coverage" >> $GITHUB_STEP_SUMMARY
+                  echo "" >> $GITHUB_STEP_SUMMARY
+                  echo "Coverage report generated. See Codecov for detailed analysis." >> $GITHUB_STEP_SUMMARY

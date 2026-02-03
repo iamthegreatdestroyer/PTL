@@ -1,0 +1,87 @@
+{
+  "name": "@ptl/core",
+  "version": "0.0.1",
+  "description": "Core Bayesian type inference engine for PTL - Probabilistic Type Lattice",
+  "author": {
+    "name": "Stevo",
+    "email": "sgbilod@iamthegreatdestroyer.com"
+  },
+  "license": "SEE LICENSE IN ../../LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamthegreatdestroyer/PTL.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/iamthegreatdestroyer/PTL/tree/main/packages/core#readme",
+  "bugs": {
+    "url": "https://github.com/iamthegreatdestroyer/PTL/issues"
+  },
+  "keywords": [
+    "typescript",
+    "type-inference",
+    "bayesian",
+    "static-analysis",
+    "type-lattice",
+    "probabilistic",
+    "dirichlet-distribution"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./lattice": {
+      "import": "./dist/lattice/index.js",
+      "types": "./dist/lattice/index.d.ts"
+    },
+    "./bayesian": {
+      "import": "./dist/bayesian/index.js",
+      "types": "./dist/bayesian/index.d.ts"
+    },
+    "./incremental": {
+      "import": "./dist/incremental/index.js",
+      "types": "./dist/incremental/index.d.ts"
+    },
+    "./analyzer": {
+      "import": "./dist/analyzer/index.js",
+      "types": "./dist/analyzer/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rimraf dist coverage .turbo",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  },
+  "dependencies": {
+    "@ptl/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@vitest/coverage-v8": "^1.1.0",
+    "rimraf": "^5.0.5",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  }
+}
