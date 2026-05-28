@@ -2,7 +2,7 @@
  * Custom Vitest matchers for PTL type inference
  */
 
-import type { TypeInference } from '@ptl/core';
+import type { TypeInference } from './assertions.js';
 
 /**
  * Vitest matcher extensions
@@ -55,7 +55,7 @@ export function createPtlMatchers() {
     },
 
     toHaveEvidence(received: TypeInference, evidenceType: string) {
-      const foundTypes = received.evidence?.map((e) => e.type) || [];
+      const foundTypes = received.evidence?.map((e) => e.type) ?? [];
       const pass = foundTypes.includes(evidenceType);
       return {
         pass,
@@ -75,7 +75,7 @@ export function createPtlMatchers() {
         };
       }
 
-      const members = new Set(unionMatch[1].split(' | ').map((m) => m.trim()));
+      const members = new Set((unionMatch[1] ?? '').split(' | ').map((m) => m.trim()));
       const expectedSet = new Set(types);
 
       const pass = members.size === expectedSet.size && types.every((t) => members.has(t));

@@ -7,13 +7,7 @@
  */
 
 import { DirichletDistribution } from './dirichlet.js';
-import type {
-  TypeBelief,
-  PriorConfig,
-  InferenceResult,
-  Observation,
-  InferenceOptions,
-} from './types.js';
+import type { PriorConfig, InferenceResult, Observation, InferenceOptions } from './types.js';
 import type { TypeLattice } from '../lattice/type-lattice.js';
 
 /**
@@ -69,7 +63,7 @@ export class BayesianInferenceEngine {
   private readonly priorConfig: PriorConfig;
 
   /** Reference to type lattice (optional) */
-  private readonly lattice?: TypeLattice;
+  private readonly lattice: TypeLattice | undefined;
 
   /** Global observation count for each type */
   private readonly globalTypeCounts: Map<string, number> = new Map();

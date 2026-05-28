@@ -3,7 +3,12 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: ['src/index.ts', 'src/bin.ts'],
   format: ['esm'],
-  dts: true,
+  dts: {
+    resolve: true,
+    compilerOptions: {
+      composite: false,
+    },
+  },
   sourcemap: true,
   clean: true,
   treeshake: true,
@@ -11,7 +16,5 @@ export default defineConfig({
   target: 'node20',
   outDir: 'dist',
   splitting: true,
-  banner: {
-    js: '#!/usr/bin/env node',
-  },
+  external: ['glob', 'chalk', 'ora', 'figures', 'commander', 'picocolors'],
 });

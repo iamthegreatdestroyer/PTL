@@ -121,7 +121,7 @@ export interface AnalyzerConfig {
 
   /**
    * File patterns to exclude
-   * @default ["**/node_modules/**", "**/dist/**", "**\/*.d.ts"]
+   * @default ["**\/node_modules\/**", "**\/dist\/**", "**\/*.d.ts"]
    */
   readonly exclude: readonly string[];
 

@@ -24,8 +24,8 @@
 
 import { TypeLattice } from './lattice/type-lattice.js';
 import type { LatticeConfig, TypeNode } from './lattice/types.js';
-import { BayesianInferenceEngine, createInferenceEngine as createBayesianEngine } from './bayesian/bayesian-inference.js';
-import type { PriorConfig, InferenceResult, Observation } from './bayesian/types.js';
+import { BayesianInferenceEngine, createBayesianEngine } from './bayesian/bayesian-inference.js';
+import type { InferenceResult, Observation, InferenceOptions } from './bayesian/types.js';
 import { IncrementalUpdater, createIncrementalUpdater } from './incremental/incremental-updater.js';
 import { DependencyGraph } from './incremental/dependency-graph.js';
 import type { UpdateDelta, PropagationResult } from './incremental/types.js';
@@ -87,7 +87,7 @@ const DEFAULT_ENGINE_CONFIG: InferenceEngineConfig = {
  */
 export class InferenceEngine {
   /** Version of the engine */
-  static readonly VERSION = '0.0.1';
+  static readonly VERSION = '1.0.0';
 
   /** Configuration */
   private readonly config: InferenceEngineConfig;
@@ -114,12 +114,14 @@ export class InferenceEngine {
     });
 
     // Initialize Bayesian inference engine
-    const priorConfig: PriorConfig = {
-      defaultAlpha: this.config.defaultAlpha,
-      typePriors: new Map(this.config.typePriors ?? []),
-      smoothing: this.config.smoothing,
-    };
-    this.bayesian = createBayesianEngine(this.lattice, priorConfig);
+    this.bayesian = createBayesianEngine(
+      {
+        defaultAlpha: this.config.defaultAlpha,
+        typePriors: new Map(this.config.typePriors ?? []),
+        smoothing: this.config.smoothing,
+      },
+      this.lattice
+    );
 
     // Initialize incremental updater
     const graph = new DependencyGraph();
@@ -168,7 +170,7 @@ export class InferenceEngine {
    * @param symbolId - Unique identifier for the symbol
    * @param options - Inference options
    */
-  infer(symbolId: string, options?: { minConfidence?: number }): InferenceResult {
+  infer(symbolId: string, options?: Partial<InferenceOptions>): InferenceResult {
     return this.bayesian.infer(symbolId, options);
   }
 
@@ -185,7 +187,7 @@ export class InferenceEngine {
 
     return {
       type: typeNode,
-      confidence: result.mostLikely.confidence,
+      confidence: result.mostLikely.probability,
     };
   }
 
@@ -269,14 +271,16 @@ export class InferenceEngine {
    * Get the join (least upper bound) of two types
    */
   join(a: string, b: string): TypeNode | null {
-    return this.lattice.join(a, b);
+    const typeId = this.lattice.join(a, b);
+    return this.lattice.getType(typeId) ?? null;
   }
 
   /**
    * Get the meet (greatest lower bound) of two types
    */
   meet(a: string, b: string): TypeNode | null {
-    return this.lattice.meet(a, b);
+    const typeId = this.lattice.meet(a, b);
+    return this.lattice.getType(typeId) ?? null;
   }
 
   // ==================== Internal Access ====================
@@ -373,6 +377,6 @@ export class InferenceEngine {
  * });
  * ```
  */
-export function createEngine(config?: Partial<InferenceEngineConfig>): InferenceEngine {
+export function createInferenceEngine(config?: Partial<InferenceEngineConfig>): InferenceEngine {
   return new InferenceEngine(config);
 }

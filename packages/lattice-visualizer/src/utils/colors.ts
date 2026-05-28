@@ -46,7 +46,7 @@ export function typeToColor(category: string): string {
     unknown: '#9E9E9E', // Grey
   };
 
-  return colors[category] ?? colors.unknown;
+  return colors[category] ?? (colors['unknown'] as string);
 }
 
 /**
@@ -59,16 +59,16 @@ export function getContrastColor(bgColor: string): string {
   // Parse HSL
   const hslMatch = bgColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
   if (hslMatch) {
-    const lightness = parseInt(hslMatch[3], 10);
+    const lightness = parseInt(hslMatch[3]!, 10);
     return lightness > 50 ? '#333' : '#fff';
   }
 
   // Parse hex
   const hexMatch = bgColor.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
   if (hexMatch) {
-    const r = parseInt(hexMatch[1], 16);
-    const g = parseInt(hexMatch[2], 16);
-    const b = parseInt(hexMatch[3], 16);
+    const r = parseInt(hexMatch[1]!, 16);
+    const g = parseInt(hexMatch[2]!, 16);
+    const b = parseInt(hexMatch[3]!, 16);
     // Calculate relative luminance
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
     return luminance > 0.5 ? '#333' : '#fff';
@@ -123,9 +123,9 @@ function parseHex(hex: string): { r: number; g: number; b: number } | null {
   const match = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
   if (!match) return null;
   return {
-    r: parseInt(match[1], 16),
-    g: parseInt(match[2], 16),
-    b: parseInt(match[3], 16),
+    r: parseInt(match[1]!, 16),
+    g: parseInt(match[2]!, 16),
+    b: parseInt(match[3]!, 16),
   };
 }
 

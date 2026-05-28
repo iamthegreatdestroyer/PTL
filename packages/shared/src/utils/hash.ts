@@ -101,7 +101,7 @@ export function parseSymbolId(symbolId: string): {
   name: string;
   scope: string[];
 } {
-  const [file, rest] = symbolId.split('#', 2);
+  const [file = '', rest] = symbolId.split('#', 2);
   const parts = rest?.split('.') ?? [];
   const name = parts.pop() ?? '';
   return { file, name, scope: parts };

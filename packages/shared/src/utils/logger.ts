@@ -22,11 +22,11 @@ const LOG_LEVELS: Record<LogLevel, number> = {
  * Console colors for each log level
  */
 const LOG_COLORS: Record<Exclude<LogLevel, 'silent'>, string> = {
-  trace: '\x1b[90m',  // Gray
-  debug: '\x1b[36m',  // Cyan
-  info: '\x1b[32m',   // Green
-  warn: '\x1b[33m',   // Yellow
-  error: '\x1b[31m',  // Red
+  trace: '\x1b[90m', // Gray
+  debug: '\x1b[36m', // Cyan
+  info: '\x1b[32m', // Green
+  warn: '\x1b[33m', // Yellow
+  error: '\x1b[31m', // Red
 };
 
 const RESET = '\x1b[0m';
@@ -91,13 +91,13 @@ export const noopLogger: Logger = {
 export function getLogLevelFromEnv(defaultLevel: LogLevel = 'info'): LogLevel {
   const env = typeof process !== 'undefined' ? process.env : {};
 
-  const level = env.PTL_LOG_LEVEL ?? env.LOG_LEVEL;
+  const level = env['PTL_LOG_LEVEL'] ?? env['LOG_LEVEL'];
   if (level && level in LOG_LEVELS) {
     return level as LogLevel;
   }
 
   // DEBUG=* means debug level
-  if (env.DEBUG) {
+  if (env['DEBUG']) {
     return 'debug';
   }
 

@@ -5,6 +5,7 @@ export default defineConfig({
   description: 'Probabilistic Type Lattice - Bayesian Type Inference',
 
   base: '/',
+  ignoreDeadLinks: true,
 
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],

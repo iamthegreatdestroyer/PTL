@@ -247,7 +247,7 @@ export const usePlaygroundStore = create<PlaygroundState>()(
         toggleSettings: () => set((state) => ({ showSettings: !state.showSettings })),
 
         // Examples
-        loadExample: (name) => set({ code: examples[name] || examples.basic }),
+        loadExample: (name) => set((state) => ({ ...state, code: examples[name] ?? examples['basic'] ?? '' })),
       }),
       {
         name: 'ptl-playground',

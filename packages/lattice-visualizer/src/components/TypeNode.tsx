@@ -4,7 +4,6 @@
  * Renders a single type node in the lattice.
  */
 
-import React from 'react';
 import type { TypeNodeProps } from './types.js';
 import { getContrastColor } from '../utils/colors.js';
 
@@ -36,7 +35,7 @@ export function TypeNode({
     <g
       transform={`translate(${node.x}, ${node.y})`}
       onClick={onClick}
-      onMouseEnter={onMouseEnter as unknown as React.MouseEventHandler<SVGGElement>}
+      onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       style={{ cursor: 'pointer' }}
     >

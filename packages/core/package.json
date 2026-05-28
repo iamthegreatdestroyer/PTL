@@ -1,6 +1,6 @@
 {
   "name": "@ptl/core",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Core Bayesian type inference engine for PTL - Probabilistic Type Lattice",
   "author": {
     "name": "Stevo",
@@ -71,7 +71,8 @@
     "lint:fix": "eslint src --ext .ts --fix"
   },
   "dependencies": {
-    "@ptl/shared": "workspace:*"
+    "@ptl/shared": "workspace:*",
+    "glob": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

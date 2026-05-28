@@ -3,8 +3,19 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "composite": true,
-    "tsBuildInfoFile": "./dist/.tsbuildinfo"
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "baseUrl": ".",
+    "typeRoots": ["../../node_modules/@types"],
+    "paths": {
+      "@ptl/shared": ["../shared/dist/index.d.ts"],
+      "@ptl/shared/*": ["../shared/dist/*"],
+      "@ptl/config": ["../config/dist/index.d.ts"],
+      "@ptl/config/*": ["../config/dist/*"],
+      "@ptl/core": ["../core/dist/index.d.ts"],
+      "@ptl/core/*": ["../core/dist/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"],

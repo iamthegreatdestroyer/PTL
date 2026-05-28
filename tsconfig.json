@@ -64,7 +64,8 @@
       "@ptl/type-priors/*": ["packages/type-priors/src/*"],
       "@ptl/lattice-visualizer": ["packages/lattice-visualizer/src/index.ts"],
       "@ptl/lattice-visualizer/*": ["packages/lattice-visualizer/src/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types"]
   },
   "exclude": ["node_modules", "**/node_modules", "**/dist", "**/coverage", "**/.turbo", "**/.next"]
 }

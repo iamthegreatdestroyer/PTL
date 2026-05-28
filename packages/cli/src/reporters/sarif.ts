@@ -16,7 +16,7 @@ export class SarifReporter extends Reporter {
   async report(
     results: readonly FileResult[],
     summary: AnalysisSummary,
-    options: CLIOptions
+    _options: CLIOptions
   ): Promise<void> {
     const sarif = {
       $schema:
@@ -102,26 +102,16 @@ export class SarifReporter extends Reporter {
 
     // Low confidence inferences
     for (const inference of result.inferences) {
-      if (inference.confidence < 0.5) {
+      const confidence = inference.confidence;
+      const typeName = inference.type;
+      if (confidence < 0.5) {
         sarifResults.push({
           ruleId: 'PTL001',
           level: 'warning',
           message: {
-            text: `Type '${inference.type}' inferred with ${Math.round(inference.confidence * 100)}% confidence`,
+            text: `Type '${typeName}' inferred with ${Math.round(confidence * 100)}% confidence`,
           },
-          locations: inference.location
-            ? [
-                {
-                  physicalLocation: {
-                    artifactLocation: { uri: result.path },
-                    region: {
-                      startLine: inference.location.line,
-                      startColumn: inference.location.column,
-                    },
-                  },
-                },
-              ]
-            : [],
+          locations: [],
         });
       }
     }

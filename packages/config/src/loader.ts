@@ -15,7 +15,7 @@ import type {
   ConfigValidationError,
 } from './types.js';
 import { validatePartialConfig } from './validator.js';
-import { defaultConfig, mergeConfig } from './defaults.js';
+import { defaultConfig as _defaultConfig, mergeConfig } from './defaults.js';
 
 /**
  * Find configuration file in directory and parent directories
@@ -117,9 +117,9 @@ export function loadConfig(options?: {
 
   return ok({
     config: validationResult.value,
-    configPath,
+    ...(configPath ? { configPath } : {}),
     warnings,
-  });
+  } as ConfigLoadResult);
 }
 
 /**
@@ -187,13 +187,13 @@ export function getConfigFromEnv(): PartialPTLConfig {
 
     let target = config;
     for (let i = 0; i < path.length - 1; i++) {
-      const key = path[i];
+      const key = path[i]!;
       if (!target[key]) {
         target[key] = {};
       }
       target = target[key] as Record<string, unknown>;
     }
-    target[path[path.length - 1]] = parse(value);
+    target[path[path.length - 1]!] = parse(value);
   }
 
   return config as PartialPTLConfig;

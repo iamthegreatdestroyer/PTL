@@ -14,7 +14,7 @@ export class JsonReporter extends Reporter {
   async report(
     results: readonly FileResult[],
     summary: AnalysisSummary,
-    options: CLIOptions
+    _options: CLIOptions
   ): Promise<void> {
     const output = {
       version: '1.0.0',
@@ -39,8 +39,7 @@ export class JsonReporter extends Reporter {
         inferences: r.inferences.map((i) => ({
           type: i.type,
           confidence: i.confidence,
-          confidenceInterval: i.confidenceInterval,
-          location: i.location,
+          alternatives: i.alternatives,
         })),
         diagnostics: r.diagnostics.map((d) => ({
           severity: d.severity,

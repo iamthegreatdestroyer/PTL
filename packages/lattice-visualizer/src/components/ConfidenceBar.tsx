@@ -4,7 +4,6 @@
  * Displays a confidence value with interval.
  */
 
-import React from 'react';
 import type { ConfidenceBarProps } from './types.js';
 import { confidenceToColor } from '../utils/colors.js';
 

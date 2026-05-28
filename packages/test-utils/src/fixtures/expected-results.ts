@@ -2,7 +2,7 @@
  * Expected inference results for fixtures
  */
 
-import type { TypeInference } from '@ptl/core';
+import type { TypeInference } from '../assertions.js';
 
 /**
  * Expected results for variable samples

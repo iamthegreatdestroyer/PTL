@@ -1,6 +1,6 @@
 {
   "name": "@ptl/lattice-visualizer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "React/D3 visualization component for PTL type lattices",
   "type": "module",
   "main": "./dist/index.js",

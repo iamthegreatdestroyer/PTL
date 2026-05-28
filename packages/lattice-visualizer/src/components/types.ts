@@ -78,12 +78,12 @@ export interface TypeNodeProps {
   /**
    * Mouse enter handler
    */
-  readonly onMouseEnter?: () => void;
+  readonly onMouseEnter?: (event: React.MouseEvent<SVGGElement>) => void;
 
   /**
    * Mouse leave handler
    */
-  readonly onMouseLeave?: () => void;
+  readonly onMouseLeave?: (event: React.MouseEvent<SVGGElement>) => void;
 }
 
 /**

@@ -98,7 +98,7 @@ export function defaultConfig(root: string): PTLConfig {
 /**
  * Deep merge two objects
  */
-function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial<T>): T {
+function deepMerge<T extends object>(target: T, source: Partial<T>): T {
   const result = { ...target };
 
   for (const key of Object.keys(source) as Array<keyof T>) {
@@ -114,10 +114,7 @@ function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial
       targetValue !== null &&
       !Array.isArray(targetValue)
     ) {
-      result[key] = deepMerge(
-        targetValue as Record<string, unknown>,
-        sourceValue as Record<string, unknown>
-      ) as T[keyof T];
+      result[key] = deepMerge(targetValue as object, sourceValue as object) as T[keyof T];
     } else if (sourceValue !== undefined) {
       result[key] = sourceValue as T[keyof T];
     }
@@ -136,10 +133,12 @@ function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial
 export function mergeConfig(partial: PartialPTLConfig, root: string): PTLConfig {
   const base = defaultConfig(partial.root ?? root);
 
-  return {
+  // Determine tsconfig value
+  const tsconfig = partial.tsconfig !== undefined ? partial.tsconfig : base.tsconfig;
+
+  const config: PTLConfig = {
     version: 1,
     root: partial.root ?? root,
-    tsconfig: partial.tsconfig ?? base.tsconfig,
     lattice: partial.lattice ? deepMerge(base.lattice, partial.lattice) : base.lattice,
     bayesian: partial.bayesian ? deepMerge(base.bayesian, partial.bayesian) : base.bayesian,
     incremental: partial.incremental
@@ -148,5 +147,8 @@ export function mergeConfig(partial: PartialPTLConfig, root: string): PTLConfig 
     analyzer: partial.analyzer ? deepMerge(base.analyzer, partial.analyzer) : base.analyzer,
     output: partial.output ? deepMerge(base.output, partial.output) : base.output,
     cache: partial.cache ? deepMerge(base.cache, partial.cache) : base.cache,
+    ...(tsconfig !== undefined && { tsconfig }),
   };
+
+  return config;
 }

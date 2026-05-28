@@ -9,7 +9,9 @@
 
 ## 🎯 Project Overview
 
-PTL is a **Bayesian type inference system** that treats types as probability distributions instead of binary pass/fail judgments. It enables gradual typing migration for TypeScript projects by providing:
+PTL is a **Bayesian type inference system** that treats types as probability distributions instead
+of binary pass/fail judgments. It enables gradual typing migration for TypeScript projects by
+providing:
 
 - **Confidence intervals** for type inferences
 - **Priority guidance** on where to add types first (highest uncertainty)
@@ -18,11 +20,12 @@ PTL is a **Bayesian type inference system** that treats types as probability dis
 - **O(1) incremental updates** for fast re-analysis
 
 ### Core Innovation
+
 ```
 Traditional: Type or No Type (Boolean)
 PTL:       P(Type | Evidence) → [0.0, 1.0] (Probabilistic)
 
-Enables: "This variable is probably a string (0.92 confidence), 
+Enables: "This variable is probably a string (0.92 confidence),
 but might be null (0.08 confidence)"
 ```
 
@@ -31,6 +34,7 @@ but might be null (0.08 confidence)"
 ## ✅ COMPLETED WORK (Phase 1: Infrastructure Scaffolding)
 
 ### 🏗️ Monorepo Architecture
+
 - **Turborepo** build orchestration with optimized caching
 - **pnpm 8.15.0** workspace management
 - **TypeScript 5.3.3** with strict mode enabled
@@ -40,45 +44,49 @@ but might be null (0.08 confidence)"
 ### 📦 11 Packages Created & Structured
 
 #### Core Packages
-| Package | Purpose | Status | Files |
-|---------|---------|--------|-------|
-| `@ptl/core` | Bayesian inference engine, type lattice, analysis | 🟡 Partial | 8 modules |
-| `@ptl/shared` | Common types, utilities, logging | ✅ Complete | 3 modules |
-| `@ptl/type-priors` | Prior probability database | ✅ Scaffolded | 3 modules |
-| `@ptl/config` | Configuration schema & validation | ✅ Scaffolded | 3 modules |
-| `@ptl/test-utils` | Testing utilities, mocks, fixtures | ✅ Scaffolded | 4 modules |
+
+| Package            | Purpose                                           | Status        | Files     |
+| ------------------ | ------------------------------------------------- | ------------- | --------- |
+| `@ptl/core`        | Bayesian inference engine, type lattice, analysis | 🟡 Partial    | 8 modules |
+| `@ptl/shared`      | Common types, utilities, logging                  | ✅ Complete   | 3 modules |
+| `@ptl/type-priors` | Prior probability database                        | ✅ Scaffolded | 3 modules |
+| `@ptl/config`      | Configuration schema & validation                 | ✅ Scaffolded | 3 modules |
+| `@ptl/test-utils`  | Testing utilities, mocks, fixtures                | ✅ Scaffolded | 4 modules |
 
 #### User-Facing Packages
-| Package | Purpose | Status | Build Target |
-|---------|---------|--------|--------------|
-| `@ptl/cli` | Command-line interface (analyze, check, watch) | 🟡 Partial | Binary |
-| `@ptl/vscode-extension` | VS Code extension with inline types | 🟡 Partial | VSIX |
-| `@ptl/lattice-visualizer` | React type lattice visualization | ✅ Scaffolded | ESM |
-| `@ptl/docs` | VitePress documentation | 🟡 Structure Only | Static HTML |
+
+| Package                   | Purpose                                        | Status            | Build Target |
+| ------------------------- | ---------------------------------------------- | ----------------- | ------------ |
+| `@ptl/cli`                | Command-line interface (analyze, check, watch) | 🟡 Partial        | Binary       |
+| `@ptl/vscode-extension`   | VS Code extension with inline types            | 🟡 Partial        | VSIX         |
+| `@ptl/lattice-visualizer` | React type lattice visualization               | ✅ Scaffolded     | ESM          |
+| `@ptl/docs`               | VitePress documentation                        | 🟡 Structure Only | Static HTML  |
 
 #### Visualization & Utilities
-| Package | Purpose | Status |
-|---------|---------|--------|
-| `@ptl/web-playground` | Interactive browser-based playground | 🟡 Partial (Mock) |
-| `apps/runtime-observer` | Runtime type observation tracer | 🟡 Partial |
-| `apps/cli` | Command-line interface | 🟡 Partial |
-| `apps/web` | Web dashboard (next phase) | 🟠 Not Started |
+
+| Package                 | Purpose                              | Status            |
+| ----------------------- | ------------------------------------ | ----------------- |
+| `@ptl/web-playground`   | Interactive browser-based playground | 🟡 Partial (Mock) |
+| `apps/runtime-observer` | Runtime type observation tracer      | 🟡 Partial        |
+| `apps/cli`              | Command-line interface               | 🟡 Partial        |
+| `apps/web`              | Web dashboard (next phase)           | 🟠 Not Started    |
 
 ### 🔧 CI/CD Pipeline (7 Workflows)
 
-| Workflow | Purpose | Status | Coverage |
-|----------|---------|--------|----------|
-| **ci.yml** | Multi-OS/Node matrix (Ubuntu, Windows, macOS × Node 20,22) | ✅ Complete | Build, test, typecheck, lint |
-| **release.yml** | Semantic versioning + npm publishing | ✅ Complete | Changesets, npm, VSIX publish |
-| **pr-check.yml** | PR validation (title, changesets, bundle size) | ✅ Complete | Pre-merge gates |
-| **docs.yml** | Documentation build & GitHub Pages deploy | ✅ Complete | VitePress → gh-pages |
-| **benchmark.yml** | Performance regression testing | ✅ Complete | Historical comparison |
-| **security.yml** | Dependency audit, CodeQL, secrets, license check | ✅ Complete | Multi-layer security |
-| **dependabot.yml** | Automated dependency updates | ✅ Complete | Security + minor updates |
+| Workflow           | Purpose                                                    | Status      | Coverage                      |
+| ------------------ | ---------------------------------------------------------- | ----------- | ----------------------------- |
+| **ci.yml**         | Multi-OS/Node matrix (Ubuntu, Windows, macOS × Node 20,22) | ✅ Complete | Build, test, typecheck, lint  |
+| **release.yml**    | Semantic versioning + npm publishing                       | ✅ Complete | Changesets, npm, VSIX publish |
+| **pr-check.yml**   | PR validation (title, changesets, bundle size)             | ✅ Complete | Pre-merge gates               |
+| **docs.yml**       | Documentation build & GitHub Pages deploy                  | ✅ Complete | VitePress → gh-pages          |
+| **benchmark.yml**  | Performance regression testing                             | ✅ Complete | Historical comparison         |
+| **security.yml**   | Dependency audit, CodeQL, secrets, license check           | ✅ Complete | Multi-layer security          |
+| **dependabot.yml** | Automated dependency updates                               | ✅ Complete | Security + minor updates      |
 
 ### 🧪 Testing Infrastructure
 
 **Framework:** Vitest with coverage requirements
+
 ```json
 {
   "coverage": {
@@ -91,14 +99,15 @@ but might be null (0.08 confidence)"
 ```
 
 **Custom Test Utilities:**
+
 - `toHaveType()` - Assert inferred type
 - `toHaveConfidence()` - Assert confidence level
 - `toBeWithinRange()` - Assert confidence interval bounds
 - `MockInferenceBuilder` - Mock engine for testing
 - `MockFileSystem` - File system abstraction
 
-
 **Test Suites:** 28+ test files across all packages
+
 ```
 ✅ BayesianTypeInference.test.ts         (Bayesian engine tests)
 ✅ TypeLattice.test.ts                   (Type lattice operations)
@@ -132,15 +141,15 @@ All configured with their own `package.json`, `tsconfig.json`, and `ptl.config.j
 
 ### ⚙️ Development Tools Configured
 
-| Tool | Purpose | Version | Configured |
-|------|---------|---------|-----------|
-| **TypeScript** | Language | 5.3.3 | ✅ tsconfig.json |
-| **Vite** | Web bundler | 5.0.10 | ✅ vite.config.ts |
-| **Vitest** | Test runner | 1.1.0 | ✅ vitest.config.ts |
-| **ESLint** | Linting | 8.56.0 | ✅ .eslintrc.js |
-| **Prettier** | Formatting | 3.1.1 | ✅ .prettierrc |
-| **Turbo** | Build tool | 1.11.2 | ✅ turbo.json |
-| **Monaco Editor** | Web editor | 4.6.0 | ✅ dependencies |
+| Tool              | Purpose     | Version | Configured          |
+| ----------------- | ----------- | ------- | ------------------- |
+| **TypeScript**    | Language    | 5.3.3   | ✅ tsconfig.json    |
+| **Vite**          | Web bundler | 5.0.10  | ✅ vite.config.ts   |
+| **Vitest**        | Test runner | 1.1.0   | ✅ vitest.config.ts |
+| **ESLint**        | Linting     | 8.56.0  | ✅ .eslintrc.js     |
+| **Prettier**      | Formatting  | 3.1.1   | ✅ .prettierrc      |
+| **Turbo**         | Build tool  | 1.11.2  | ✅ turbo.json       |
+| **Monaco Editor** | Web editor  | 4.6.0   | ✅ dependencies     |
 
 ### 📄 Configuration Files
 
@@ -172,6 +181,7 @@ All configured with their own `package.json`, `tsconfig.json`, and `ptl.config.j
 ## 🟡 IN PROGRESS / PARTIALLY COMPLETE
 
 ### Core Engine Implementation
+
 **Status:** 35% - Structure complete, logic incomplete
 
 ```
@@ -202,6 +212,7 @@ All configured with their own `package.json`, `tsconfig.json`, and `ptl.config.j
 ```
 
 ### CLI Implementation
+
 **Status:** 40% - Commands scaffolded, handlers incomplete
 
 ```
@@ -216,6 +227,7 @@ Commands Defined:
 ```
 
 ### Web Playground
+
 **Status:** 50% - UI complete with mock data
 
 ```
@@ -228,6 +240,7 @@ Commands Defined:
 ```
 
 ### VS Code Extension
+
 **Status:** 30% - Activation complete, features incomplete
 
 ```
@@ -273,16 +286,16 @@ Commands Defined:
 
 ### Missing Features
 
-| Feature | Component | Impact | Effort |
-|---------|-----------|--------|--------|
-| Real type inference | Core engine | Critical | 40 hours |
-| Incremental updates | Core engine | High | 20 hours |
-| Type priors population | type-priors | High | 15 hours |
-| CLI handlers | CLI | High | 20 hours |
-| Web playground backend | Web app | Medium | 25 hours |
-| VS Code features | Extension | Medium | 30 hours |
-| Documentation content | Docs | Medium | 20 hours |
-| Runtime observer | Runtime tracing | Low | 15 hours |
+| Feature                | Component       | Impact   | Effort   |
+| ---------------------- | --------------- | -------- | -------- |
+| Real type inference    | Core engine     | Critical | 40 hours |
+| Incremental updates    | Core engine     | High     | 20 hours |
+| Type priors population | type-priors     | High     | 15 hours |
+| CLI handlers           | CLI             | High     | 20 hours |
+| Web playground backend | Web app         | Medium   | 25 hours |
+| VS Code features       | Extension       | Medium   | 30 hours |
+| Documentation content  | Docs            | Medium   | 20 hours |
+| Runtime observer       | Runtime tracing | Low      | 15 hours |
 
 ### Missing Deployment/Operations
 
@@ -299,16 +312,16 @@ Commands Defined:
 
 ### Codebase Metrics
 
-| Metric | Value |
-|--------|-------|
-| **Total Files Created** | 245+ |
-| **TypeScript Files** | ~150+ |
-| **Test Files** | 28+ |
-| **Configuration Files** | 20+ |
+| Metric                  | Value    |
+| ----------------------- | -------- |
+| **Total Files Created** | 245+     |
+| **TypeScript Files**    | ~150+    |
+| **Test Files**          | 28+      |
+| **Configuration Files** | 20+      |
 | **Total Lines of Code** | ~33,000+ |
-| **Package Count** | 11 |
-| **Example Projects** | 10 |
-| **CI/CD Workflows** | 7 |
+| **Package Count**       | 11       |
+| **Example Projects**    | 10       |
+| **CI/CD Workflows**     | 7        |
 
 ### Package Distribution
 
@@ -329,11 +342,11 @@ packages/
 
 ### Dependencies
 
-| Type | Count | Status |
-|------|-------|--------|
-| **Dev Dependencies** | 13 | Current |
-| **Runtime Dependencies** | ~20 | Current |
-| **Peer Dependencies** | 2 | Node.js 20+, TypeScript 5+ |
+| Type                     | Count | Status                     |
+| ------------------------ | ----- | -------------------------- |
+| **Dev Dependencies**     | 13    | Current                    |
+| **Runtime Dependencies** | ~20   | Current                    |
+| **Peer Dependencies**    | 2     | Node.js 20+, TypeScript 5+ |
 
 ---
 
@@ -341,16 +354,16 @@ packages/
 
 ### By Component
 
-| Component | Scaffolding | Core Logic | Tests | Docs | Status |
-|-----------|-------------|-----------|-------|------|--------|
-| Config System | ✅ | 🟡 70% | ✅ | 🟡 | 75% |
-| Type Lattice | ✅ | 🟡 50% | 🟡 | 🟠 | 50% |
-| Bayesian Engine | ✅ | 🟡 30% | 🟡 | 🟠 | 30% |
-| CLI | ✅ | 🟡 40% | 🟡 | 🟠 | 40% |
-| Web Playground | ✅ | 🟡 50% | 🟡 | 🟠 | 50% |
-| VS Code Ext | ✅ | 🟡 20% | 🟠 | 🟠 | 20% |
-| Documentation | ✅ | 🟠 0% | ✅ | 🟠 | 10% |
-| CI/CD | ✅ | ✅ | ✅ | ✅ | 95% |
+| Component       | Scaffolding | Core Logic | Tests | Docs | Status |
+| --------------- | ----------- | ---------- | ----- | ---- | ------ |
+| Config System   | ✅          | 🟡 70%     | ✅    | 🟡   | 75%    |
+| Type Lattice    | ✅          | 🟡 50%     | 🟡    | 🟠   | 50%    |
+| Bayesian Engine | ✅          | 🟡 30%     | 🟡    | 🟠   | 30%    |
+| CLI             | ✅          | 🟡 40%     | 🟡    | 🟠   | 40%    |
+| Web Playground  | ✅          | 🟡 50%     | 🟡    | 🟠   | 50%    |
+| VS Code Ext     | ✅          | 🟡 20%     | 🟠    | 🟠   | 20%    |
+| Documentation   | ✅          | 🟠 0%      | ✅    | 🟠   | 10%    |
+| CI/CD           | ✅          | ✅         | ✅    | ✅   | 95%    |
 
 ### Overall Progress
 
@@ -388,18 +401,21 @@ Deployment:         ✅✅🟠🟠🟠 40%  PARTIAL
 ## 📋 Remaining Critical Work
 
 ### High Priority (Blocking)
+
 1. **Dirichlet Distribution** - Core math engine
 2. **Type Inference Logic** - Main value proposition
 3. **AST Analysis** - Observation collection
 4. **CLI Handlers** - User-facing interface
 
 ### Medium Priority (Important)
+
 1. **Web Playground Integration** - Demo/communication
 2. **Incremental Updates** - Performance critical
 3. **Documentation Content** - User onboarding
 4. **VS Code Features** - IDE integration
 
 ### Low Priority (Polish)
+
 1. **Runtime Observer** - Advanced feature
 2. **Deployment Scripts** - DevOps
 3. **Performance Optimization** - Not yet bottlenecked
@@ -410,16 +426,19 @@ Deployment:         ✅✅🟠🟠🟠 40%  PARTIAL
 ## 💡 Next Steps Overview
 
 **Immediate (This Week):**
+
 - Implement Dirichlet prior calculations
 - Implement type inference core logic
 - Add basic test coverage
 
 **Short Term (This Month):**
+
 - Complete CLI handlers
 - Integrate web playground with core
 - Implement incremental updates
 
 **Medium Term (Next Quarter):**
+
 - Full feature parity across all clients (CLI, Web, VSCode)
 - Comprehensive documentation
 - Performance optimization
@@ -430,11 +449,13 @@ Deployment:         ✅✅🟠🟠🟠 40%  PARTIAL
 ## ✨ Summary
 
 PTL has a **solid, professional foundation**. The scaffolding phase is complete with:
+
 - ✅ Modern, scalable architecture
 - ✅ Production-grade CI/CD
 - ✅ Comprehensive testing setup
 - ✅ Multiple user interfaces designed
 
-**What remains: Implementing the core Bayesian type inference logic and integrating it across all interfaces.**
+**What remains: Implementing the core Bayesian type inference logic and integrating it across all
+interfaces.**
 
 The path forward is clear, well-structured, and ready for rapid implementation.

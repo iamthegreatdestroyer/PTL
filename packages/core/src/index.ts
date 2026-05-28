@@ -56,9 +56,9 @@ export {
 // =============================================================================
 // Main Entry Point
 // =============================================================================
-export { createInferenceEngine, type InferenceEngineConfig } from './engine.js';
+export { InferenceEngine, createInferenceEngine, type InferenceEngineConfig } from './engine.js';
 
 // =============================================================================
 // Version
 // =============================================================================
-export const VERSION = '0.0.1';
+export const VERSION = '1.0.0';

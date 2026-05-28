@@ -21,8 +21,8 @@ function mockAnalyze(code: string): Promise<InferenceResult[]> {
           // Simple heuristic-based mock inference
           const functionMatch = line.match(/function\s+(\w+)\s*\(([^)]*)\)/);
           if (functionMatch) {
-            const params = functionMatch[2].split(',').filter((p) => p.trim());
-            params.forEach((param, i) => {
+            const params = (functionMatch[2] ?? '').split(',').filter((p) => p.trim());
+            params.forEach((param) => {
               const col = line.indexOf(param.trim());
               inferences.push({
                 id: `${id++}`,
@@ -46,7 +46,7 @@ function mockAnalyze(code: string): Promise<InferenceResult[]> {
           // Variable declarations
           const varMatch = line.match(/(?:const|let|var)\s+(\w+)\s*=/);
           if (varMatch) {
-            const varName = varMatch[1];
+            const varName = varMatch[1] ?? '';
             const col = line.indexOf(varName);
             let inferredType = 'unknown';
             let confidence = 0.5;

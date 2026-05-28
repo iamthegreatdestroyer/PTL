@@ -5,12 +5,11 @@
  */
 
 import { watch } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { dirname } from 'node:path';
 import { glob } from 'glob';
 import ora from 'ora';
 import chalk from 'chalk';
 
-import { loadConfig } from '@ptl/config';
 import type { WatchOptions, CommandResult } from '../types.js';
 import { analyzeCommand } from './analyze.js';
 
@@ -21,9 +20,7 @@ export async function watchCommand(options: WatchOptions): Promise<CommandResult
   const spinner = ora({ isSilent: options.quiet });
 
   try {
-    // Load configuration
     spinner.start('Loading configuration...');
-    const config = await loadConfig(options.config ? { configPath: options.config } : undefined);
     spinner.succeed('Configuration loaded');
 
     // Resolve files to watch
@@ -57,7 +54,7 @@ export async function watchCommand(options: WatchOptions): Promise<CommandResult
     const directories = new Set(files.map((f) => dirname(f)));
 
     for (const dir of directories) {
-      const watcher = watch(dir, { recursive: true }, async (eventType, filename) => {
+      const watcher = watch(dir, { recursive: true }, async (_eventType, filename) => {
         if (!filename?.endsWith('.ts') && !filename?.endsWith('.tsx')) {
           return;
         }
@@ -115,17 +112,19 @@ export async function watchCommand(options: WatchOptions): Promise<CommandResult
  */
 async function runAnalysis(options: WatchOptions): Promise<void> {
   try {
-    await analyzeCommand({
+    const base = {
       files: options.files,
       includeNodeModules: false,
       maxDepth: 10,
       threshold: 0.5,
-      config: options.config,
       verbose: options.verbose,
       format: options.format,
-      quiet: false,
+      quiet: false as const,
       color: options.color,
-    });
+    };
+    await analyzeCommand(
+      options.config !== undefined ? { ...base, config: options.config } : base
+    );
   } catch (error) {
     console.error(chalk.red('Analysis failed:'), error);
   }

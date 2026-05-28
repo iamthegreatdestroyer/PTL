@@ -1,6 +1,6 @@
 {
   "name": "@ptl/shared",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Shared utilities, types, and constants for PTL",
   "type": "module",
   "exports": {

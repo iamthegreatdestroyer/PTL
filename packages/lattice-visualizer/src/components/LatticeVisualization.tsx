@@ -145,11 +145,14 @@ export function LatticeVisualization({
     [onNodeHover]
   );
 
-  const handleNodeMouseLeave = useCallback(() => {
-    setSelection((s) => ({ ...s, hoveredId: null }));
-    setTooltipNode(null);
-    onNodeHover?.(null);
-  }, [onNodeHover]);
+  const handleNodeMouseLeave = useCallback(
+    (_event: React.MouseEvent<SVGGElement>) => {
+      setSelection((s) => ({ ...s, hoveredId: null }));
+      setTooltipNode(null);
+      onNodeHover?.(null);
+    },
+    [onNodeHover]
+  );
 
   // Zoom controls
   const handleZoomIn = useCallback(() => {

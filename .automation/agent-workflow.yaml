@@ -1,0 +1,649 @@
+# Agent Workflow Configuration
+# This file orchestrates autonomous agent execution for the PTL project
+# Located: .automation/agent-workflow.yaml
+
+version: "1.0"
+name: "PTL Autonomous Execution Framework"
+description: "Multi-agent orchestration for 22-phase implementation"
+updated: "2026-02-18"
+
+---
+
+## PRIMARY AGENTS & ASSIGNMENTS
+
+agents:
+  APEX:
+    tier: "TIER 1 - Foundational"
+    specialty: "Elite Computer Science Engineering"
+    capacity: "160 hours"
+    phases_assigned: [13, 14, 15, 16]
+    primary_responsibilities:
+      - "Core Bayesian Engine implementation"
+      - "CLI toolkit development"
+      - "Web Playground integration"
+      - "VS Code Extension features"
+    team_members: ["@APEX"]
+    escalation_to: "@OMNISCIENT"
+    authority_level: "HIGH"
+
+  ECLIPSE:
+    tier: "TIER 2 - Specialist"
+    specialty: "Testing, Verification & Formal Methods"
+    capacity: "80 hours"
+    phases_assigned: [13, 14, 15, 16, 18]
+    primary_responsibilities:
+      - "Validation gate implementation"
+      - "Test suite creation"
+      - "Coverage tracking"
+      - "CI/CD test strategies"
+    team_members: ["@ECLIPSE"]
+    escalation_to: "@OMNISCIENT"
+    authority_level: "HIGH"
+
+  SENTRY:
+    tier: "TIER 5 - Domain Specialist"
+    specialty: "Observability, Logging & Monitoring"
+    capacity: "60 hours"
+    phases_assigned: [17, 18, 20]
+    primary_responsibilities:
+      - "Metrics collection"
+      - "Performance monitoring"
+      - "Type prior statistics"
+      - "Runtime observation"
+    team_members: ["@SENTRY"]
+    escalation_to: "@OMNISCIENT"
+    authority_level: "MEDIUM"
+
+  MENTOR:
+    tier: "TIER 7 - Human-Centric"
+    specialty: "Code Review & Developer Education"
+    capacity: "50 hours"
+    phases_assigned: [19, 22]
+    primary_responsibilities:
+      - "Documentation"
+      - "Release packaging"
+      - "API guides"
+      - "Examples"
+    team_members: ["@MENTOR"]
+    escalation_to: "@OMNISCIENT"
+    authority_level: "MEDIUM"
+
+  VELOCITY:
+    tier: "TIER 1 - Foundational"
+    specialty: "Performance Optimization"
+    capacity: "40 hours"
+    phases_assigned: [21]
+    primary_responsibilities:
+      - "Performance optimization"
+      - "Benchmarking"
+      - "Algorithm optimization"
+    team_members: ["@VELOCITY"]
+    escalation_to: "@OMNISCIENT"
+    authority_level: "MEDIUM"
+
+  OMNISCIENT:
+    tier: "TIER 4 - Meta Agent"
+    specialty: "Orchestration & Evolution"
+    capacity: "Unlimited"
+    phases_assigned: [all]
+    primary_responsibilities:
+      - "Overall coordination"
+      - "Decision escalation"
+      - "Agent health monitoring"
+      - "Memory system management"
+    team_members: ["@OMNISCIENT"]
+    escalation_to: "USER"
+    authority_level: "SUPREME"
+
+---
+
+## PHASE EXECUTION SCHEDULE
+
+phases:
+  phase_13:
+    title: "Core Bayesian Inference Engine"
+    primary_agent: "APEX"
+    support_agents: ["ECLIPSE", "SENTRY"]
+    effort: "40h"
+    start_date: "2026-02-18"
+    target_date: "2026-02-25"
+    dependencies: []
+    parallel_with: ["phase_17"]
+    blocks: ["phase_14", "phase_15", "phase_16"]
+
+    tasks:
+      - task_id: "13.1"
+        name: "Implement Dirichlet Distribution"
+        file: "packages/core/src/probability/dirichlet.ts"
+        owner: "APEX"
+        effort: "8h"
+        target_date: "2026-02-19"
+        validation: ["code_quality", "test_coverage"]
+        success_criteria:
+          - "5 tests passing"
+          - "coverage > 90%"
+          - "functions: sampleDirichlet, updateDirichlet, posteriorDirichlet"
+
+      - task_id: "13.2"
+        name: "Implement Bayesian Inference Engine"
+        file: "packages/core/src/bayesian/bayesian-inference.ts"
+        owner: "APEX"
+        effort: "10h"
+        target_date: "2026-02-21"
+        validation: ["code_quality", "test_coverage", "performance"]
+        success_criteria:
+          - "8 tests passing"
+          - "coverage > 90%"
+          - "Bayes theorem: P(Type|Ev) computed correctly"
+          - "inference < 5ms per sample"
+
+      - task_id: "13.3"
+        name: "Implement TypeScript AST Analyzer"
+        file: "packages/core/src/analyzer/source-file-analyzer.ts"
+        owner: "APEX"
+        effort: "10h"
+        target_date: "2026-02-22"
+        validation: ["code_quality", "test_coverage", "performance"]
+        success_criteria:
+          - "7 tests passing"
+          - "coverage > 90%"
+          - "analysis < 100ms per file"
+
+      - task_id: "13.4"
+        name: "Implement Incremental Update System"
+        file: "packages/core/src/incremental/incremental-updater.ts"
+        owner: "APEX"
+        effort: "8h"
+        target_date: "2026-02-23"
+        validation: ["code_quality", "test_coverage"]
+        success_criteria:
+          - "5 tests passing"
+          - "coverage > 90%"
+
+      - task_id: "13.5"
+        name: "Implement Type Lattice"
+        file: "packages/core/src/lattice/type-lattice.ts"
+        owner: "APEX"
+        effort: "4h"
+        target_date: "2026-02-24"
+        validation: ["code_quality", "test_coverage"]
+        success_criteria:
+          - "3 tests passing"
+          - "coverage > 90%"
+
+      - task_id: "13.6"
+        name: "Integration & Validation"
+        file: "packages/core/src/__tests__/phase-13.test.ts"
+        owner: "ECLIPSE"
+        effort: "4h"
+        target_date: "2026-02-25"
+        validation: ["all_gates"]
+        success_criteria:
+          - "28 tests passing"
+          - "coverage > 90%"
+          - "Build succeeds"
+          - "No TypeScript errors"
+
+  phase_14:
+    title: "CLI Implementation"
+    primary_agent: "APEX"
+    support_agents: ["ECLIPSE"]
+    effort: "25h"
+    start_date: "2026-02-26"
+    target_date: "2026-03-04"
+    dependencies: ["phase_13"]
+    parallel_with: ["phase_15", "phase_16"]
+    blocks: ["phase_18"]
+    status: "READY_TO_START"
+
+  phase_15:
+    title: "Web Playground Integration"
+    primary_agent: "APEX"
+    support_agents: ["ECLIPSE"]
+    effort: "20h"
+    start_date: "2026-02-26"
+    target_date: "2026-03-04"
+    dependencies: ["phase_13"]
+    parallel_with: ["phase_14", "phase_16"]
+    blocks: ["phase_18"]
+    status: "READY_TO_START"
+
+  phase_16:
+    title: "VS Code Extension Features"
+    primary_agent: "APEX"
+    support_agents: ["ECLIPSE"]
+    effort: "30h"
+    start_date: "2026-02-28"
+    target_date: "2026-03-10"
+    dependencies: ["phase_13"]
+    parallel_with: ["phase_14", "phase_15"]
+    blocks: ["phase_18"]
+    status: "READY_TO_START"
+
+  phase_17:
+    title: "Type Priors Data"
+    primary_agent: "SENTRY"
+    support_agents: []
+    effort: "10h"
+    start_date: "2026-02-18"
+    target_date: "2026-02-28"
+    dependencies: []
+    parallel_with: ["phase_13"]
+    blocks: ["phase_18"]
+    status: "CAN_START_NOW"
+
+  phase_18:
+    title: "Comprehensive Testing"
+    primary_agent: "ECLIPSE"
+    support_agents: ["APEX"]
+    effort: "25h"
+    start_date: "2026-03-05"
+    target_date: "2026-03-10"
+    dependencies: ["phase_13", "phase_14", "phase_15", "phase_16", "phase_17"]
+    parallel_with: ["phase_20"]
+    blocks: ["phase_19", "phase_21"]
+    status: "WAITING"
+
+  phase_19:
+    title: "Documentation"
+    primary_agent: "MENTOR"
+    support_agents: []
+    effort: "20h"
+    start_date: "2026-03-11"
+    target_date: "2026-03-15"
+    dependencies: ["phase_14", "phase_15", "phase_16", "phase_18"]
+    parallel_with: ["phase_21"]
+    blocks: ["phase_22"]
+    status: "WAITING"
+
+  phase_20:
+    title: "Runtime Observer"
+    primary_agent: "SENTRY"
+    support_agents: ["APEX"]
+    effort: "15h"
+    start_date: "2026-03-05"
+    target_date: "2026-03-12"
+    dependencies: ["phase_14", "phase_15"]
+    parallel_with: ["phase_18"]
+    blocks: []
+    status: "WAITING"
+
+  phase_21:
+    title: "Performance Optimization"
+    primary_agent: "VELOCITY"
+    support_agents: ["APEX", "SENTRY"]
+    effort: "15h"
+    start_date: "2026-03-11"
+    target_date: "2026-03-15"
+    dependencies: ["phase_13", "phase_14", "phase_15", "phase_16", "phase_18", "phase_20"]
+    parallel_with: ["phase_19"]
+    blocks: ["phase_22"]
+    status: "WAITING"
+
+  phase_22:
+    title: "Distribution & Packaging"
+    primary_agent: "MENTOR"
+    support_agents: []
+    effort: "10h"
+    start_date: "2026-03-16"
+    target_date: "2026-03-20"
+    dependencies: ["phase_19", "phase_21"]
+    parallel_with: []
+    blocks: []
+    status: "WAITING"
+
+---
+
+## VALIDATION GATE DEFINITIONS
+
+gates:
+  code_quality:
+    name: "Code Quality"
+    checks:
+      - "typescript_strict_mode"
+      - "eslint_passing"
+      - "prettier_formatted"
+      - "no_security_issues"
+    auto_pass_threshold: "100%"
+    failure_action: "BLOCK_MERGE"
+    owner: "ECLIPSE"
+
+  test_coverage:
+    name: "Test Coverage"
+    checks:
+      - "line_coverage > 90%"
+      - "branch_coverage > 85%"
+      - "all_tests_passing"
+      - "no_skipped_tests"
+    auto_pass_threshold: "100%"
+    failure_action: "BLOCK_MERGE"
+    owner: "ECLIPSE"
+
+  performance:
+    name: "Performance"
+    checks:
+      - "no_regression"
+      - "benchmark_passing"
+      - "memory_acceptable"
+      - "latency_ok"
+    auto_pass_threshold: "100%"
+    failure_action: "WARN_AND_MERGE"
+    owner: "VELOCITY"
+
+  documentation:
+    name: "Documentation"
+    checks:
+      - "api_docs_complete"
+      - "readme_updated"
+      - "examples_present"
+      - "changelog_updated"
+    auto_pass_threshold: "100%"
+    failure_action: "WARN_AND_MERGE"
+    owner: "MENTOR"
+
+  integration:
+    name: "Integration"
+    checks:
+      - "builds_successfully"
+      - "no_typescript_errors"
+      - "imports_resolve"
+      - "dependencies_ok"
+      - "no_circular_deps"
+    auto_pass_threshold: "100%"
+    failure_action: "BLOCK_MERGE"
+    owner: "APEX"
+
+---
+
+## DAILY EXECUTION LOOP
+
+daily_standup:
+  schedule: "async (posted in GitHub Issues)"
+  format: "markdown"
+  required_sections:
+    - progress: "% complete, LOC committed, tests passing"
+    - blockers: "any issues preventing progress"
+    - metrics: "coverage, performance, hours spent"
+    - next_day: "planned tasks for tomorrow"
+  template: |
+    ## Daily Standup - Phase N - [AGENT]
+
+    **Date:** 2026-02-XX
+    **Agent:** @AGENT_NAME
+    **Phase:** Phase N - [Title]
+    **Effort Spent:** X hours
+
+    ### Progress
+    - [ ] Task A: XX% (YY/ZZ done)
+    - [ ] Task B: XX% (YY/ZZ done)
+
+    **Metrics:**
+    - Lines of code: XXX
+    - Tests passing: XX/XX
+    - Coverage: XX%
+
+    ### Blockers
+    None / [List any blockers]
+
+    ### Next Steps
+    1. Complete Task A
+    2. Begin Task B
+    3. Validate gates
+
+---
+
+## AGENT DECISION AUTHORITY MATRIX
+
+decision_authority:
+  code_commit:
+    agent_can_decide: true
+    threshold: "all gates passing"
+    escalation_if: "any gate failing"
+
+  test_failure_investigation:
+    agent_can_decide: true
+    threshold: "root cause identified"
+    escalation_if: "unfamiliar domain"
+
+  deadline_slip:
+    agent_can_decide: true
+    threshold: "slip < 12 hours"
+    escalation_if: "slip > 24 hours"
+    escalation_to: "@OMNISCIENT"
+    escalation_if_critical: "slip > 48 hours → USER"
+
+  scope_change:
+    agent_can_decide: false
+    escalation_to: "@OMNISCIENT"
+    escalation_if_critical: "major feature → USER"
+
+  architectural_decision:
+    agent_can_decide: true
+    threshold: "within phase scope"
+    escalation_if: "affects other phases"
+    escalation_to: "@OMNISCIENT"
+
+  technical_debt:
+    agent_can_decide: true
+    threshold: "doesn't block progress"
+    escalation_if: "blocks delivery"
+    escalation_to: "@OMNISCIENT"
+
+---
+
+## FAILURE RECOVERY PROCEDURES
+
+failure_modes:
+
+  test_regression:
+    detection: "test count decreased OR coverage dropped"
+    response:
+      - "immediately rollback last commit"
+      - "post issue in GitHub"
+      - "investigate root cause"
+      - "fix and recommit"
+    escalation_if: "cannot determine cause in 1 hour"
+    escalation_to: "@OMNISCIENT"
+
+  deadline_slip:
+    detection: "projected completion > target date"
+    response:
+      - "if slip < 6h: continue, no action"
+      - "if slip 6-12h: daily check-ins"
+      - "if slip 12-24h: escalate to @OMNISCIENT"
+      - "if slip > 24h: escalate to USER"
+    recovery_tactics:
+      - "identify critical path items"
+      - "defer non-critical tasks"
+      - "increase parallelization"
+
+  dependency_blocked:
+    detection: "upstream phase incomplete"
+    response:
+      - "check PHASE_COMPLETION.md for status"
+      - "message upstream agent with timeline"
+      - "prepare integration tests meanwhile"
+      - "if wait > 6h: escalate to @OMNISCIENT"
+    recovery_tactics:
+      - "mock upstream dependencies"
+      - "develop in isolation"
+      - "prepare integration branch"
+
+  performance_regression:
+    detection: "benchmark time increased > 5%"
+    response:
+      - "investigate performance profiler output"
+      - "identify regression commit"
+      - "optimize or revert"
+      - "re-run benchmark"
+    escalation_if: "cannot identify cause in 2 hours"
+    escalation_to: "@VELOCITY"
+
+  integration_failure:
+    detection: "code works in isolation but fails in integration"
+    response:
+      - "isolate failing integration point"
+      - "add integration tests"
+      - "fix integration issue"
+      - "update interface documentation"
+    escalation_if: "affects multiple components"
+    escalation_to: "@ARCHITECT"
+
+---
+
+## MEMORY & LEARNING
+
+memory:
+  enabled: true
+  type: "MNEMONIC (Multi-Agent Neural Experience Memory)"
+
+  experience_storage:
+    - decision_outcomes: "track what worked and what didn't"
+    - failure_modes: "learn from integration issues"
+    - performance_patterns: "identify optimization opportunities"
+    - estimation_accuracy: "improve future effort estimates"
+
+  learning_triggers:
+    - "phase completion → save experience"
+    - "failure recovery → save solution"
+    - "performance optimization → save technique"
+    - "daily standup → update metrics"
+
+  cross_agent_sharing:
+    enabled: true
+    tier_share: true
+    breakthrough_promotion: true
+    fitness_evolution: true
+
+---
+
+## ESCALATION PATHS
+
+escalation_levels:
+
+  level_1_agent_autonomous:
+    authority: ["code commits", "test investigation", "minor deadline slips < 12h"]
+    cannot_escalate: false
+    must_inform: "@OMNISCIENT (async)"
+
+  level_2_omniscient:
+    authority: ["deadline slips 12-48h", "scope questions", "architectural decisions"]
+    must_decide_by: "same day"
+    escalates_to: "USER (if > 48h slip)"
+
+  level_3_user:
+    authority: ["deadline slips > 48h", "major scope changes", "feature cuts"]
+    decision_window: "4 hours"
+
+  critical_issue:
+    definition: "project stopped, wait time > 6 hours"
+    action: "immediate escalation to USER"
+    parallel: "all agents assist diagnosis"
+
+---
+
+## METRICS COLLECTION
+
+metrics:
+  phase_metrics:
+    - hours_spent: "sum of agent effort"
+    - lines_of_code: "LOC committed per phase"
+    - test_count: "number of passing tests"
+    - coverage: "line and branch coverage %"
+    - performance: "benchmark results (ms/op)"
+    - gate_status: "pass/fail for each validation gate"
+
+  collection_frequency:
+    - push: "automatic on every commit"
+    - daily: "agent standup captures daily metrics"
+    - weekly: "generate trend report"
+    - phase_complete: "auto-generate phase summary"
+
+  dashboard:
+    type: "real-time metrics dashboard"
+    location: ".automation/metrics-dashboard.json"
+    updates_frequency: "every commit"
+    displays:
+      - "phase progress %"
+      - "effort remaining (hours)"
+      - "deadline tracking (days)"
+      - "test trends"
+      - "coverage trends"
+      - "performance trends"
+
+---
+
+## WEEKLY SYNCHRONIZATION
+
+weekly_sync:
+  schedule: "every Friday 2pm UTC"
+  duration: "30 minutes"
+  format: "text-based async standups (no meetings if not required)"
+
+  agenda:
+    - progress_update: "all phases, blockers, risks"
+    - metric_review: "coverage, performance, schedule"
+    - dependency_check: "upcoming critical paths"
+    - risk_assessment: "new risks identified"
+    - adjustment_planning: "if slip detected, adjust timeline"
+
+  required_attendees: "all primary agents (APEX, ECLIPSE, SENTRY, MENTOR, VELOCITY, OMNISCIENT)"
+
+  output:
+    - weekly_report: "markdown document"
+    - updated_phase_completion: "dashboard update"
+    - risk_register: "updated with new risks"
+
+---
+
+## DEFINITION OF DONE
+
+phase_complete_criteria:
+  - all_code_merged: true
+  - all_gates_passing: true
+  - coverage_target_met: true
+  - performance_target_met: true
+  - documentation_complete: true
+  - no_known_bugs: true
+  - tests_passing: true
+  - zero_typescript_errors: true
+
+  auto_transition:
+    to_next_phase: "when all_criteria_met"
+    notification: "auto-posted GitHub issue"
+    deployment: "auto-merge to main"
+
+---
+
+## TEAM COMMUNICATION CHANNELS
+
+communication:
+  synchronous:
+    - github_issues: "status updates, blockers"
+    - github_discussions: "technical questions, design decisions"
+
+  asynchronous:
+    - github_commit_messages: "what changed and why"
+    - github_pull_request_comments: "code review and feedback"
+
+  escalation:
+    - github_issue_label: "@OMNISCIENT-assist"
+    - critical: "GitHub issue + mention @OMNISCIENT + mark urgent"
+
+---
+
+## CONFIGURATION VALIDATION
+
+validation:
+  - all_agents_defined: ✅
+  - all_phases_scheduled: ✅
+  - all_dependencies_mapped: ✅
+  - no_circular_dependencies: ✅
+  - all_gates_defined: ✅
+  - authority_matrix_complete: ✅
+  - escalation_paths_clear: ✅
+  - metrics_defined: ✅
+
+**Status:** READY FOR EXECUTION ✅
+**Last Updated:** 2026-02-18
+**Next Review:** Weekly every Friday

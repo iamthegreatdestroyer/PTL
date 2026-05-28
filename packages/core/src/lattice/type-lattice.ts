@@ -10,8 +10,6 @@
 
 import type {
   TypeNode,
-  TypeKind,
-  TypeMetadata,
   TypeRelation,
   LatticeConfig,
   LatticeWalkOptions,
@@ -109,6 +107,7 @@ export class TypeLattice {
       { id: 'type:null', name: 'null' },
       { id: 'type:void', name: 'void' },
       { id: 'type:object', name: 'object' },
+      { id: 'type:array', name: 'Array' },
       { id: 'type:function', name: 'Function' },
     ];
 
@@ -500,7 +499,7 @@ export class TypeLattice {
   toJSON(): object {
     return {
       config: this.config,
-      nodes: [...this.nodes.entries()].map(([id, node]) => ({
+      nodes: [...this.nodes.entries()].map(([_id, node]) => ({
         ...node,
         parents: [...node.parents],
         children: [...node.children],

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l:*)",
+      "Bash(git log:*)",
+      "Bash(grep:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx tsup:*)",
+      "Bash(ls:*)",
+      "Bash(/s/PTL/PHASE_13_COMPLETE.md:*)",
+      "Bash(pnpm test:*)",
+      "Bash(unset:*)",
+      "Bash(NODE_ENV= pnpm install:*)",
+      "Bash(node -e:*)"
+    ]
+  }
+}

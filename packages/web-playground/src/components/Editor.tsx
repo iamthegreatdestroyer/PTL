@@ -5,10 +5,12 @@
  */
 
 import { useRef, useEffect } from 'react';
-import MonacoEditor, { OnMount, OnChange } from '@monaco-editor/react';
-import type { editor } from 'monaco-editor';
+import MonacoEditor from '@monaco-editor/react';
+import type { OnMount, OnChange } from '@monaco-editor/react';
 
 import { usePlaygroundStore, type InferenceResult } from '../store';
+
+type StandaloneEditor = Parameters<OnMount>[0];
 
 interface EditorProps {
   code: string;
@@ -18,7 +20,7 @@ interface EditorProps {
 
 export function Editor({ code, onChange, inferences }: EditorProps) {
   const { settings, selectInference, selectedInferenceId } = usePlaygroundStore();
-  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const editorRef = useRef<StandaloneEditor | null>(null);
   const decorationsRef = useRef<string[]>([]);
 
   // Handle editor mount
@@ -64,15 +66,23 @@ export function Editor({ code, onChange, inferences }: EditorProps) {
 
   // Update decorations when inferences change
   useEffect(() => {
-    if (!editorRef.current) return;
+    const ed = editorRef.current;
+    if (ed === null) return;
 
-    const editor = editorRef.current;
-    const monaco = (window as any).monaco;
+    type MonacoGlobal = {
+      Range: new (sl: number, sc: number, el: number, ec: number) => unknown;
+    };
+    type EditorWithDecorations = {
+      deltaDecorations: (old: string[], next: unknown[]) => string[];
+    };
 
-    if (!monaco) return;
+    const w = window as unknown as { monaco?: MonacoGlobal };
+    const monaco = w.monaco;
+    if (monaco === undefined) return;
 
-    // Create decorations for inferences
-    const newDecorations: editor.IModelDeltaDecoration[] = inferences.map((inf) => {
+    const edWithDec = ed as unknown as EditorWithDecorations;
+
+    const newDecorations = inferences.map((inf) => {
       const isSelected = inf.id === selectedInferenceId;
       const confidence = inf.confidence;
 
@@ -82,34 +92,25 @@ export function Editor({ code, onChange, inferences }: EditorProps) {
       } else if (confidence < 0.85) {
         className = 'ptl-inference-medium';
       }
-
-      if (isSelected) {
-        className += ' ptl-inference-selected';
-      }
+      if (isSelected) className += ' ptl-inference-selected';
 
       return {
         range: new monaco.Range(
-          inf.location.line,
-          inf.location.column,
-          inf.location.endLine,
-          inf.location.endColumn
+          inf.location.line as number,
+          inf.location.column as number,
+          inf.location.endLine as number,
+          inf.location.endColumn as number
         ),
         options: {
           inlineClassName: className,
-          hoverMessage: {
-            value: `**${inf.type}** (${Math.round(inf.confidence * 100)}% confidence)`,
-          },
+          hoverMessage: { value: `**${inf.type}** (${Math.round(inf.confidence * 100)}% confidence)` },
           afterContentClassName: `ptl-inference-badge ${className}`,
-          after: {
-            content: `: ${inf.type} ${Math.round(inf.confidence * 100)}%`,
-            inlineClassName: 'ptl-inline-hint',
-          },
+          after: { content: `: ${inf.type} ${Math.round(inf.confidence * 100)}%`, inlineClassName: 'ptl-inline-hint' },
         },
       };
     });
 
-    // Apply decorations
-    decorationsRef.current = editor.deltaDecorations(decorationsRef.current, newDecorations);
+    decorationsRef.current = edWithDec.deltaDecorations(decorationsRef.current, newDecorations);
   }, [inferences, selectedInferenceId]);
 
   return (

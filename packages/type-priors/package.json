@@ -1,6 +1,6 @@
 {
   "name": "@ptl/type-priors",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Pre-trained type frequency priors for PTL Bayesian inference",
   "type": "module",
   "main": "./dist/index.js",

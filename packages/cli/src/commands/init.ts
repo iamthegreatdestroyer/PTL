@@ -10,40 +10,13 @@ import { writeFile, mkdir } from 'node:fs/promises';
 import ora from 'ora';
 import chalk from 'chalk';
 
-import { DEFAULT_CONFIG, validateConfig, type PTLConfig } from '@ptl/config';
+import { defaultConfig, validateConfig, type PTLConfig } from '@ptl/config';
 import type { InitOptions, CommandResult } from '../types.js';
 
-/**
- * Configuration presets
- */
 const PRESETS: Record<string, Partial<PTLConfig>> = {
-  minimal: {
-    inference: {
-      maxIterations: 50,
-      convergenceThreshold: 0.01,
-      priorStrength: 0.3,
-      enableSpeculation: false,
-    },
-    output: {
-      showConfidenceIntervals: false,
-      minConfidenceToShow: 0.5,
-    },
-  },
-  standard: {
-    // Uses defaults
-  },
-  strict: {
-    inference: {
-      maxIterations: 200,
-      convergenceThreshold: 0.001,
-      priorStrength: 0.5,
-      enableSpeculation: true,
-    },
-    output: {
-      minConfidenceToShow: 0.8,
-      showAlternatives: true,
-    },
-  },
+  minimal: {},
+  standard: {},
+  strict: {},
 };
 
 /**
@@ -70,15 +43,15 @@ export async function initCommand(options: InitOptions): Promise<CommandResult> 
     // Create configuration
     spinner.start('Creating configuration...');
 
-    const preset = PRESETS[options.preset] ?? PRESETS.standard;
-    const config = mergeConfig(DEFAULT_CONFIG, preset);
+    const preset = PRESETS[options.preset] ?? PRESETS['standard'] ?? {};
+    const config = mergeConfig(defaultConfig(options.directory), preset);
 
     // Validate config
     const validation = validateConfig(config);
-    if (!validation.valid) {
+    if (!validation.ok) {
       spinner.fail('Invalid configuration');
-      for (const error of validation.errors) {
-        console.error(chalk.red(`  - ${error}`));
+      for (const error of validation.error) {
+        console.error(chalk.red(`  - ${String(error)}`));
       }
       return {
         exitCode: 1,
@@ -142,18 +115,17 @@ export async function initCommand(options: InitOptions): Promise<CommandResult> 
  * Deep merge configuration objects
  */
 function mergeConfig(base: PTLConfig, override: Partial<PTLConfig>): PTLConfig {
-  const result = { ...base };
+  const result: Record<string, unknown> = { ...(base as unknown as Record<string, unknown>) };
 
   for (const [key, value] of Object.entries(override)) {
-    if (value !== undefined && typeof value === 'object' && !Array.isArray(value)) {
-      (result as Record<string, unknown>)[key] = mergeConfig(
-        (base as Record<string, unknown>)[key] as PTLConfig,
-        value
-      );
-    } else if (value !== undefined) {
-      (result as Record<string, unknown>)[key] = value;
+    if (value === undefined) continue;
+    const baseVal = (base as unknown as Record<string, unknown>)[key];
+    if (typeof value === 'object' && !Array.isArray(value) && typeof baseVal === 'object' && baseVal !== null) {
+      result[key] = { ...(baseVal as unknown as Record<string, unknown>), ...(value as unknown as Record<string, unknown>) };
+    } else {
+      result[key] = value;
     }
   }
 
-  return result;
+  return result as unknown as PTLConfig;
 }

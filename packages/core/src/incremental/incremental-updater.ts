@@ -7,12 +7,7 @@
 
 import type { BayesianInferenceEngine } from '../bayesian/bayesian-inference.js';
 import { DependencyGraph } from './dependency-graph.js';
-import type {
-  UpdateDelta,
-  PropagationResult,
-  UpdateOptions,
-  UpdaterStats,
-} from './types.js';
+import type { UpdateDelta, PropagationResult, UpdateOptions, UpdaterStats } from './types.js';
 
 /**
  * Default update options
@@ -69,7 +64,7 @@ export class IncrementalUpdater {
    * This is the main entry point for incremental updates.
    */
   applyDelta(delta: UpdateDelta): PropagationResult {
-    const startTime = performance.now();
+    const startTime = Date.now();
     this.totalUpdates++;
 
     const directlyAffected = new Set<string>();
@@ -115,7 +110,7 @@ export class IncrementalUpdater {
       this.reInferSymbols(needsReInference);
     }
 
-    const propagationTimeMs = performance.now() - startTime;
+    const propagationTimeMs = Date.now() - startTime;
     this.totalPropagations++;
 
     return {

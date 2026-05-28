@@ -2,7 +2,7 @@
  * Type definitions for the analyzer module
  */
 
-import type { TypeBelief, InferenceResult } from '../bayesian/types.js';
+import type { InferenceResult } from '../bayesian/types.js';
 import type { TypeNode } from '../lattice/types.js';
 
 /**
@@ -143,6 +143,9 @@ export interface SymbolInfo {
 
   /** Parent symbol (for methods, properties) */
   readonly parent?: string;
+
+  /** Type parameters for generic types (e.g., ['T', 'K']) */
+  readonly typeParameters?: readonly string[];
 }
 
 /**

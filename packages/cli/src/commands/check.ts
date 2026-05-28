@@ -8,8 +8,8 @@ import ora from 'ora';
 import chalk from 'chalk';
 import { glob } from 'glob';
 
-import { loadConfig } from '@ptl/config';
 import type { CheckOptions, CommandResult } from '../types.js';
+import { createCoreAdapter } from '../adapters/core-adapter.js';
 
 /**
  * Execute the check command
@@ -18,9 +18,7 @@ export async function checkCommand(options: CheckOptions): Promise<CommandResult
   const spinner = ora({ isSilent: options.quiet });
 
   try {
-    // Load configuration
     spinner.start('Loading configuration...');
-    const config = await loadConfig(options.config ? { configPath: options.config } : undefined);
     spinner.succeed('Configuration loaded');
 
     // Resolve files
@@ -42,11 +40,41 @@ export async function checkCommand(options: CheckOptions): Promise<CommandResult
     spinner.start('Checking types...');
     const startTime = Date.now();
 
-    // TODO: Implement actual type checking using @ptl/core
-    // For now, placeholder implementation
+    // Create adapter and analyze files
+    const adapter = createCoreAdapter({
+      minConfidence: options.minConfidence,
+    });
+
+    const results = await adapter.analyzeFiles(files);
+
+    // Apply stricter checks
     let errorCount = 0;
     let warningCount = 0;
     let lowConfidenceCount = 0;
+    const allDiagnostics: any[] = [];
+
+    for (const result of results) {
+      const checked = adapter.checkFile(result, options.minConfidence);
+
+      // Count diagnostics
+      for (const diag of checked.diagnostics) {
+        allDiagnostics.push(diag);
+        if (diag.severity === 'error') {
+          errorCount++;
+        } else if (diag.severity === 'warning') {
+          warningCount++;
+        }
+      }
+
+      // Count low-confidence inferences in strict mode
+      if (options.strict) {
+        for (const inference of result.inferences) {
+          if (inference.confidence < options.minConfidence) {
+            lowConfidenceCount++;
+          }
+        }
+      }
+    }
 
     const duration = Date.now() - startTime;
 
@@ -78,7 +106,7 @@ export async function checkCommand(options: CheckOptions): Promise<CommandResult
 
     return {
       exitCode,
-      diagnostics: [],
+      diagnostics: allDiagnostics,
       summary,
     };
   } catch (error) {

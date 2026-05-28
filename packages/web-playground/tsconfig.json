@@ -13,10 +13,5 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src"],
-  "references": [
-    { "path": "../shared" },
-    { "path": "../core" },
-    { "path": "../lattice-visualizer" }
-  ]
+  "include": ["src"]
 }

@@ -6,8 +6,11 @@
  */
 
 import { TypeLattice } from '../lattice/type-lattice.js';
-import { BayesianInferenceEngine, createInferenceEngine } from '../bayesian/bayesian-inference.js';
-import { IncrementalUpdater, createIncrementalUpdater } from '../incremental/incremental-updater.js';
+import { BayesianInferenceEngine, createBayesianEngine } from '../bayesian/bayesian-inference.js';
+import {
+  IncrementalUpdater,
+  createIncrementalUpdater,
+} from '../incremental/incremental-updater.js';
 import { DependencyGraph } from '../incremental/dependency-graph.js';
 import { SourceFileAnalyzer } from './source-file-analyzer.js';
 import type {
@@ -56,11 +59,14 @@ export class Analyzer {
     });
 
     // Initialize inference engine
-    this.engine = createInferenceEngine(this.lattice, {
-      defaultAlpha: 1.0,
-      typePriors: new Map(),
-      smoothing: 0.1,
-    });
+    this.engine = createBayesianEngine(
+      {
+        defaultAlpha: 1.0,
+        typePriors: new Map(),
+        smoothing: 0.1,
+      },
+      this.lattice
+    );
 
     // Initialize incremental updater
     const graph = new DependencyGraph();
@@ -96,43 +102,132 @@ export class Analyzer {
   /**
    * Analyze a project directory
    *
-   * This is a placeholder that will be implemented with actual file system access.
+   * Discovers and analyzes all TypeScript/JavaScript files matching the configured patterns.
    */
   async analyzeProject(rootDir?: string): Promise<AnalysisResult> {
-    const startTime = performance.now();
+    const startTime = Date.now();
     const root = rootDir ?? this.config.rootDir;
 
+    // Step 1: Discover files
+    const filePaths = await this.discoverFiles(root);
+
+    // Step 2: Read and analyze files
     const files: FileAnalysisResult[] = [];
     const errors: AnalysisError[] = [];
     const warnings: AnalysisWarning[] = [];
 
-    // Placeholder: In real implementation, we would:
-    // 1. Scan the directory for matching files
-    // 2. Read each file
-    // 3. Analyze each file
-    // 4. Collect results
+    let parseTimeMs = 0;
+    let analyzeTimeMs = 0;
+    let inferenceTimeMs = 0;
 
-    // For now, return results from any files already analyzed
-    for (const result of this.analyzedFiles.values()) {
-      files.push(result);
-      errors.push(...result.errors);
+    for (const filePath of filePaths) {
+      try {
+        const fileStartTime = Date.now();
+
+        // Read file
+        const source = await this.readFile(filePath);
+        const readTime = Date.now() - fileStartTime;
+
+        // Analyze file
+        const analyzeStartTime = Date.now();
+        const result = this.analyzeFile(filePath, source);
+        const analyzeTime = Date.now() - analyzeStartTime;
+
+        files.push(result);
+        errors.push(...result.errors);
+
+        // Track timing
+        parseTimeMs += readTime;
+        analyzeTimeMs += analyzeTime - result.durationMs;
+        inferenceTimeMs += result.durationMs;
+      } catch (error) {
+        errors.push({
+          code: 'FILE_READ_ERROR',
+          message: `Failed to read ${filePath}: ${error instanceof Error ? error.message : String(error)}`,
+          severity: 'error',
+          file: filePath,
+        });
+      }
     }
 
-    const durationMs = performance.now() - startTime;
+    const durationMs = Date.now() - startTime;
 
-    // Calculate statistics
+    // Step 3: Compute statistics
+    return this.computeAnalysisResult(
+      root,
+      files,
+      errors,
+      warnings,
+      durationMs,
+      parseTimeMs,
+      analyzeTimeMs,
+      inferenceTimeMs
+    );
+  }
+
+  /**
+   * Discover files matching include/exclude patterns
+   */
+  private async discoverFiles(rootDir: string): Promise<string[]> {
+    const { include, exclude } = this.config;
+
+    // Import glob dynamically (ESM compatible)
+    const { glob } = await import('glob');
+
+    const allFiles: Set<string> = new Set();
+
+    // Process include patterns
+    for (const pattern of include) {
+      const matches = await glob(pattern, {
+        cwd: rootDir,
+        absolute: true,
+        ignore: exclude as string[],
+        nodir: true,
+        follow: false, // Don't follow symlinks
+      });
+
+      for (const file of matches) {
+        allFiles.add(file);
+      }
+    }
+
+    return Array.from(allFiles).sort();
+  }
+
+  /**
+   * Read a file with error handling
+   */
+  private async readFile(filePath: string): Promise<string> {
+    const fs = await import('node:fs/promises');
+    return fs.readFile(filePath, 'utf-8');
+  }
+
+  /**
+   * Compute final analysis result with statistics
+   */
+  private computeAnalysisResult(
+    rootDir: string,
+    files: FileAnalysisResult[],
+    errors: AnalysisError[],
+    warnings: AnalysisWarning[],
+    durationMs: number,
+    parseTimeMs: number,
+    analyzeTimeMs: number,
+    inferenceTimeMs: number
+  ): AnalysisResult {
     const totalSymbols = files.reduce((sum, f) => sum + f.symbolCount, 0);
-    const allSymbols = files.flatMap(f => f.symbols);
+    const allSymbols = files.flatMap((f) => f.symbols);
 
-    const highConfidenceSymbols = allSymbols.filter(s => s.confidence >= 0.8).length;
-    const mediumConfidenceSymbols = allSymbols.filter(s => s.confidence >= 0.5 && s.confidence < 0.8).length;
-    const lowConfidenceSymbols = allSymbols.filter(s => s.confidence < 0.5).length;
+    const highConfidenceSymbols = allSymbols.filter((s) => s.confidence >= 0.8).length;
+    const mediumConfidenceSymbols = allSymbols.filter(
+      (s) => s.confidence >= 0.5 && s.confidence < 0.8
+    ).length;
+    const lowConfidenceSymbols = allSymbols.filter((s) => s.confidence < 0.5).length;
 
-    const averageConfidence = allSymbols.length > 0
-      ? allSymbols.reduce((sum, s) => sum + s.confidence, 0) / allSymbols.length
-      : 0;
-
-    const graphStats = this.incremental.getGraph().getStats();
+    const averageConfidence =
+      allSymbols.length > 0
+        ? allSymbols.reduce((sum, s) => sum + s.confidence, 0) / allSymbols.length
+        : 0;
 
     const stats: AnalysisStats = {
       filesProcessed: files.length,
@@ -141,13 +236,13 @@ export class Analyzer {
       typesInLattice: this.lattice.getAllTypes().length,
       cacheHits: 0,
       cacheMisses: 0,
-      parseTimeMs: 0,
-      analyzeTimeMs: durationMs,
-      inferenceTimeMs: 0,
+      parseTimeMs,
+      analyzeTimeMs,
+      inferenceTimeMs,
     };
 
     return {
-      rootDir: root,
+      rootDir,
       files,
       totalSymbols,
       highConfidenceSymbols,

@@ -1,0 +1,294 @@
+
+> ptl-monorepo@0.0.1 build
+> turbo run build
+
+ΓÇó Packages in scope: @ptl/cli, @ptl/config, @ptl/core, @ptl/docs, @ptl/lattice-visualizer, @ptl/shared, @ptl/test-utils, @ptl/type-priors, @ptl/web-playground, ptl-vscode
+ΓÇó Running build in 10 packages
+ΓÇó Remote caching disabled
+@ptl/docs:build: cache miss, executing 475b8e40dd739346
+@ptl/shared:build: cache hit, replaying logs c1edb509e2124e65
+@ptl/shared:build: ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":">=20.0.0"} (current: {"node":"v18.20.8","pnpm":"8.15.0"})
+@ptl/shared:build: 
+@ptl/shared:build: > @ptl/shared@0.0.1 build S:\PTL\packages\shared
+@ptl/shared:build: > tsup
+@ptl/shared:build: 
+@ptl/shared:build: [34mCLI[39m Building entry: src/constants.ts, src/index.ts, src/types.ts, src/utils/index.ts
+@ptl/shared:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@ptl/shared:build: [34mCLI[39m tsup v8.5.1
+@ptl/shared:build: [34mCLI[39m Using tsup config: S:\PTL\packages\shared\tsup.config.ts
+@ptl/shared:build: [34mCLI[39m Target: node20
+@ptl/shared:build: [34mCLI[39m Cleaning output folder
+@ptl/shared:build: [34mESM[39m Build start
+@ptl/shared:build: [33mESM[39m [33mYou have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin[39m
+@ptl/shared:build: [32mESM[39m [1mdist\types.js           [22m[32m551.00 B[39m
+@ptl/shared:build: [32mESM[39m [1mdist\index.js           [22m[32m15.54 KB[39m
+@ptl/shared:build: [32mESM[39m [1mdist\constants.js       [22m[32m2.64 KB[39m
+@ptl/shared:build: [32mESM[39m [1mdist\utils\index.js     [22m[32m12.47 KB[39m
+@ptl/shared:build: [32mESM[39m [1mdist\types.js.map       [22m[32m7.31 KB[39m
+@ptl/shared:build: [32mESM[39m [1mdist\constants.js.map   [22m[32m7.59 KB[39m
+@ptl/shared:build: [32mESM[39m [1mdist\utils\index.js.map [22m[32m37.50 KB[39m
+@ptl/shared:build: [32mESM[39m [1mdist\index.js.map       [22m[32m52.60 KB[39m
+@ptl/shared:build: [32mESM[39m ΓÜí∩╕Å Build success in 387ms
+@ptl/shared:build: [34mDTS[39m Build start
+@ptl/shared:build: [32mDTS[39m ΓÜí∩╕Å Build success in 4911ms
+@ptl/shared:build: [32mDTS[39m [1mdist\index.d.ts       [22m[32m1.74 KB[39m
+@ptl/shared:build: [32mDTS[39m [1mdist\constants.d.ts   [22m[32m4.33 KB[39m
+@ptl/shared:build: [32mDTS[39m [1mdist\types.d.ts       [22m[32m4.92 KB[39m
+@ptl/shared:build: [32mDTS[39m [1mdist\utils\index.d.ts [22m[32m10.29 KB[39m
+@ptl/core:build: cache miss, executing 4d8a8c37e5e58d84
+@ptl/lattice-visualizer:build: cache miss, executing a476727542ee0ed2
+@ptl/config:build: cache miss, executing f3e1a861a4f40498
+@ptl/type-priors:build: cache hit, replaying logs bcbd3c1a64f899a6
+@ptl/type-priors:build: ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":">=20.0.0"} (current: {"node":"v18.20.8","pnpm":"8.15.0"})
+@ptl/type-priors:build: 
+@ptl/type-priors:build: > @ptl/type-priors@0.0.1 build S:\PTL\packages\type-priors
+@ptl/type-priors:build: > tsup
+@ptl/type-priors:build: 
+@ptl/type-priors:build: [34mCLI[39m Building entry: {"index":"src/index.ts","data":"src/data.ts"}
+@ptl/type-priors:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@ptl/type-priors:build: [34mCLI[39m tsup v8.5.1
+@ptl/type-priors:build: [34mCLI[39m Using tsup config: S:\PTL\packages\type-priors\tsup.config.ts
+@ptl/type-priors:build: [34mCLI[39m Target: node20
+@ptl/type-priors:build: [34mCLI[39m Cleaning output folder
+@ptl/type-priors:build: [34mESM[39m Build start
+@ptl/type-priors:build: [33mESM[39m [33mYou have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin[39m
+@ptl/type-priors:build: [32mESM[39m [1mdist\data.js               [22m[32m181.00 B[39m
+@ptl/type-priors:build: [32mESM[39m [1mdist\index.js              [22m[32m4.10 KB[39m
+@ptl/type-priors:build: [32mESM[39m [1mdist\data.js.map           [22m[32m68.00 B[39m
+@ptl/type-priors:build: [32mESM[39m [1mdist\chunk-PNNPBGRS.js     [22m[32m10.71 KB[39m
+@ptl/type-priors:build: [32mESM[39m [1mdist\index.js.map          [22m[32m11.83 KB[39m
+@ptl/type-priors:build: [32mESM[39m [1mdist\chunk-PNNPBGRS.js.map [22m[32m23.76 KB[39m
+@ptl/type-priors:build: [32mESM[39m ΓÜí∩╕Å Build success in 1029ms
+@ptl/type-priors:build: [34mDTS[39m Build start
+@ptl/type-priors:build: [32mDTS[39m ΓÜí∩╕Å Build success in 5100ms
+@ptl/type-priors:build: [32mDTS[39m [1mdist\index.d.ts         [22m[32m2.54 KB[39m
+@ptl/type-priors:build: [32mDTS[39m [1mdist\data.d.ts          [22m[32m135.00 B[39m
+@ptl/type-priors:build: [32mDTS[39m [1mdist\data-CbdDv38X.d.ts [22m[32m3.77 KB[39m
+@ptl/docs:build: 
+@ptl/docs:build: > @ptl/docs@0.1.0 build S:\PTL\packages\docs
+@ptl/docs:build: > vitepress build
+@ptl/docs:build: 
+@ptl/config:build: ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":">=20.0.0"} (current: {"node":"v18.20.8","pnpm":"8.15.0"})
+@ptl/config:build: 
+@ptl/config:build: > @ptl/config@0.0.1 build S:\PTL\packages\config
+@ptl/config:build: > tsup
+@ptl/config:build: 
+@ptl/lattice-visualizer:build: ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":">=20.0.0"} (current: {"node":"v18.20.8","pnpm":"8.15.0"})
+@ptl/core:build: ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":">=20.0.0"} (current: {"node":"v18.20.8","pnpm":"8.15.0"})
+@ptl/core:build: 
+@ptl/core:build: > @ptl/core@0.0.1 build S:\PTL\packages\core
+@ptl/core:build: > tsup
+@ptl/core:build: 
+@ptl/lattice-visualizer:build: 
+@ptl/lattice-visualizer:build: > @ptl/lattice-visualizer@0.0.1 build S:\PTL\packages\lattice-visualizer
+@ptl/lattice-visualizer:build: > tsup
+@ptl/lattice-visualizer:build: 
+@ptl/docs:build: Γû▓ [WARNING] Cannot find base config file "../../tsconfig.base.json" [tsconfig.json]
+@ptl/docs:build: 
+@ptl/docs:build:     tsconfig.json:2:13:
+@ptl/docs:build:       2 Γöé   "extends": "../../tsconfig.base.json",
+@ptl/docs:build:         Γò╡              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+@ptl/docs:build: 
+@ptl/docs:build: 
+@ptl/docs:build:   [32m[1mvitepress[22m v1.6.4[39m
+@ptl/docs:build: 
+@ptl/docs:build: - building client + server bundles...
+@ptl/config:build: [34mCLI[39m Building entry: {"index":"src/index.ts","schema":"src/schema.ts"}
+@ptl/core:build: [34mCLI[39m Building entry: {"index":"src/index.ts","lattice/index":"src/lattice/index.ts","bayesian/index":"src/bayesian/index.ts","incremental/index":"src/incremental/index.ts","analyzer/index":"src/analyzer/index.ts"}
+@ptl/config:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@ptl/config:build: [34mCLI[39m tsup v8.5.1
+@ptl/config:build: [34mCLI[39m Using tsup config: S:\PTL\packages\config\tsup.config.ts
+@ptl/core:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@ptl/core:build: [34mCLI[39m tsup v8.5.1
+@ptl/core:build: [34mCLI[39m Using tsup config: S:\PTL\packages\core\tsup.config.ts
+@ptl/config:build: [34mCLI[39m Target: node20
+@ptl/lattice-visualizer:build: [34mCLI[39m Building entry: src/index.ts
+@ptl/core:build: [34mCLI[39m Target: node20
+@ptl/lattice-visualizer:build: [34mCLI[39m Using tsconfig: tsconfig.json
+@ptl/lattice-visualizer:build: [34mCLI[39m tsup v8.5.1
+@ptl/lattice-visualizer:build: [34mCLI[39m Using tsup config: S:\PTL\packages\lattice-visualizer\tsup.config.ts
+@ptl/lattice-visualizer:build: [34mCLI[39m Target: es2022
+@ptl/config:build: [34mCLI[39m Cleaning output folder
+@ptl/config:build: [34mESM[39m Build start
+@ptl/lattice-visualizer:build: [34mCLI[39m Cleaning output folder
+@ptl/lattice-visualizer:build: [34mESM[39m Build start
+@ptl/config:build: [33mESM[39m [33mYou have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin[39m
+@ptl/lattice-visualizer:build: [33mESM[39m [33mYou have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin[39m
+@ptl/core:build: [34mCLI[39m Cleaning output folder
+@ptl/core:build: [34mESM[39m Build start
+@ptl/core:build: [33mESM[39m [33mYou have emitDecoratorMetadata enabled but @swc/core was not installed, skipping swc plugin[39m
+@ptl/core:build: Generated an empty chunk: "chunk-E2CKVTTI".
+@ptl/core:build: Generated an empty chunk: "chunk-Q7MJBNML".
+@ptl/core:build: Generated an empty chunk: "chunk-KOS2UKYO".
+@ptl/config:build: [32mESM[39m [1mdist\index.js      [22m[32m12.73 KB[39m
+@ptl/config:build: [32mESM[39m [1mdist\schema.js     [22m[32m8.79 KB[39m
+@ptl/config:build: [32mESM[39m [1mdist\index.js.map  [22m[32m34.95 KB[39m
+@ptl/config:build: [32mESM[39m [1mdist\schema.js.map [22m[32m16.25 KB[39m
+@ptl/config:build: [32mESM[39m ΓÜí∩╕Å Build success in 456ms
+@ptl/lattice-visualizer:build: [32mESM[39m [1mdist\index.js     [22m[32m19.66 KB[39m
+@ptl/lattice-visualizer:build: [32mESM[39m [1mdist\index.js.map [22m[32m50.42 KB[39m
+@ptl/lattice-visualizer:build: [32mESM[39m ΓÜí∩╕Å Build success in 459ms
+@ptl/core:build: [32mESM[39m [1mdist\lattice\index.js         [22m[32m169.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\incremental\index.js     [22m[32m200.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\index.js                 [22m[32m6.33 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-E2CKVTTI.js        [22m[32m86.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\bayesian\index.js        [22m[32m207.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\analyzer\index.js        [22m[32m245.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-KOS2UKYO.js        [22m[32m86.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-Q7MJBNML.js        [22m[32m86.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-XFP47T5U.js        [22m[32m10.96 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-I2JHTOUG.js        [22m[32m14.76 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-KBGRV2CS.js        [22m[32m16.97 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\lattice\index.js.map     [22m[32m69.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-E2CKVTTI.js.map    [22m[32m78.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-CNGTZWIO.js        [22m[32m10.98 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\incremental\index.js.map [22m[32m69.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\bayesian\index.js.map    [22m[32m69.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\analyzer\index.js.map    [22m[32m69.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-KOS2UKYO.js.map    [22m[32m78.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-Q7MJBNML.js.map    [22m[32m78.00 B[39m
+@ptl/core:build: [32mESM[39m [1mdist\index.js.map             [22m[32m16.67 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-XFP47T5U.js.map    [22m[32m26.20 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-I2JHTOUG.js.map    [22m[32m35.49 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-CNGTZWIO.js.map    [22m[32m26.06 KB[39m
+@ptl/core:build: [32mESM[39m [1mdist\chunk-KBGRV2CS.js.map    [22m[32m39.74 KB[39m
+@ptl/core:build: [32mESM[39m ΓÜí∩╕Å Build success in 899ms
+@ptl/core:build: [34mDTS[39m Build start
+@ptl/config:build: [34mDTS[39m Build start
+@ptl/lattice-visualizer:build: [34mDTS[39m Build start
+@ptl/config:build: src/validator.ts(30,11): error TS4111: Property 'version' comes from an index signature, so it must be accessed with ['version'].
+@ptl/config:build: src/validator.ts(30,40): error TS4111: Property 'version' comes from an index signature, so it must be accessed with ['version'].
+@ptl/config:build: src/validator.ts(34,18): error TS4111: Property 'version' comes from an index signature, so it must be accessed with ['version'].
+@ptl/config:build: src/validator.ts(39,18): error TS4111: Property 'root' comes from an index signature, so it must be accessed with ['root'].
+@ptl/config:build: src/validator.ts(39,43): error TS4111: Property 'root' comes from an index signature, so it must be accessed with ['root'].
+@ptl/config:build: src/validator.ts(43,18): error TS4111: Property 'root' comes from an index signature, so it must be accessed with ['root'].
+@ptl/config:build: src/validator.ts(48,11): error TS4111: Property 'lattice' comes from an index signature, so it must be accessed with ['lattice'].
+@ptl/config:build: src/validator.ts(49,31): error TS4111: Property 'lattice' comes from an index signature, so it must be accessed with ['lattice'].
+@ptl/config:build: src/validator.ts(52,11): error TS4111: Property 'bayesian' comes from an index signature, so it must be accessed with ['bayesian'].
+@ptl/config:build: src/validator.ts(53,32): error TS4111: Property 'bayesian' comes from an index signature, so it must be accessed with ['bayesian'].
+@ptl/config:build: src/validator.ts(56,11): error TS4111: Property 'incremental' comes from an index signature, so it must be accessed with ['incremental'].
+@ptl/config:build: src/validator.ts(57,35): error TS4111: Property 'incremental' comes from an index signature, so it must be accessed with ['incremental'].
+@ptl/config:build: src/validator.ts(60,11): error TS4111: Property 'analyzer' comes from an index signature, so it must be accessed with ['analyzer'].
+@ptl/config:build: src/validator.ts(61,32): error TS4111: Property 'analyzer' comes from an index signature, so it must be accessed with ['analyzer'].
+@ptl/config:build: src/validator.ts(64,11): error TS4111: Property 'output' comes from an index signature, so it must be accessed with ['output'].
+@ptl/config:build: src/validator.ts(65,30): error TS4111: Property 'output' comes from an index signature, so it must be accessed with ['output'].
+@ptl/config:build: src/validator.ts(68,11): error TS4111: Property 'cache' comes from an index signature, so it must be accessed with ['cache'].
+@ptl/config:build: src/validator.ts(69,29): error TS4111: Property 'cache' comes from an index signature, so it must be accessed with ['cache'].
+@ptl/config:build: src/validator.ts(99,11): error TS4111: Property 'version' comes from an index signature, so it must be accessed with ['version'].
+@ptl/config:build: src/validator.ts(99,40): error TS4111: Property 'version' comes from an index signature, so it must be accessed with ['version'].
+@ptl/config:build: src/validator.ts(103,18): error TS4111: Property 'version' comes from an index signature, so it must be accessed with ['version'].
+@ptl/config:build: src/validator.ts(108,11): error TS4111: Property 'lattice' comes from an index signature, so it must be accessed with ['lattice'].
+@ptl/config:build: src/validator.ts(109,31): error TS4111: Property 'lattice' comes from an index signature, so it must be accessed with ['lattice'].
+@ptl/config:build: src/validator.ts(112,11): error TS4111: Property 'bayesian' comes from an index signature, so it must be accessed with ['bayesian'].
+@ptl/config:build: src/validator.ts(113,32): error TS4111: Property 'bayesian' comes from an index signature, so it must be accessed with ['bayesian'].
+@ptl/config:build: src/validator.ts(116,11): error TS4111: Property 'incremental' comes from an index signature, so it must be accessed with ['incremental'].
+@ptl/config:build: src/validator.ts(117,35): error TS4111: Property 'incremental' comes from an index signature, so it must be accessed with ['incremental'].
+@ptl/config:build: src/validator.ts(120,11): error TS4111: Property 'analyzer' comes from an index signature, so it must be accessed with ['analyzer'].
+@ptl/config:build: src/validator.ts(121,32): error TS4111: Property 'analyzer' comes from an index signature, so it must be accessed with ['analyzer'].
+@ptl/config:build: src/validator.ts(124,11): error TS4111: Property 'output' comes from an index signature, so it must be accessed with ['output'].
+@ptl/config:build: src/validator.ts(125,30): error TS4111: Property 'output' comes from an index signature, so it must be accessed with ['output'].
+@ptl/config:build: src/validator.ts(128,11): error TS4111: Property 'cache' comes from an index signature, so it must be accessed with ['cache'].
+@ptl/config:build: src/validator.ts(129,29): error TS4111: Property 'cache' comes from an index signature, so it must be accessed with ['cache'].
+@ptl/config:build: src/validator.ts(144,3): error TS6133: 'partial' is declared but its value is never read.
+@ptl/config:build: src/validator.ts(153,11): error TS4111: Property 'includeStdlib' comes from an index signature, so it must be accessed with ['includeStdlib'].
+@ptl/config:build: src/validator.ts(153,53): error TS4111: Property 'includeStdlib' comes from an index signature, so it must be accessed with ['includeStdlib'].
+@ptl/config:build: src/validator.ts(157,18): error TS4111: Property 'includeStdlib' comes from an index signature, so it must be accessed with ['includeStdlib'].
+@ptl/config:build: src/validator.ts(161,11): error TS4111: Property 'includeDom' comes from an index signature, so it must be accessed with ['includeDom'].
+@ptl/config:build: src/validator.ts(161,50): error TS4111: Property 'includeDom' comes from an index signature, so it must be accessed with ['includeDom'].
+@ptl/config:build: src/validator.ts(165,18): error TS4111: Property 'includeDom' comes from an index signature, so it must be accessed with ['includeDom'].
+@ptl/config:build: src/validator.ts(169,11): error TS4111: Property 'maxDepth' comes from an index signature, so it must be accessed with ['maxDepth'].
+@ptl/config:build: src/validator.ts(170,20): error TS4111: Property 'maxDepth' comes from an index signature, so it must be accessed with ['maxDepth'].
+@ptl/config:build: src/validator.ts(170,49): error TS4111: Property 'maxDepth' comes from an index signature, so it must be accessed with ['maxDepth'].
+@ptl/config:build: src/validator.ts(170,69): error TS4111: Property 'maxDepth' comes from an index signature, so it must be accessed with ['maxDepth'].
+@ptl/config:build: src/validator.ts(174,20): error TS4111: Property 'maxDepth' comes from an index signature, so it must be accessed with ['maxDepth'].
+@ptl/config:build: src/validator.ts(183,3): error TS6133: 'partial' is declared but its value is never read.
+@ptl/config:build: src/validator.ts(192,11): error TS4111: Property 'defaultAlpha' comes from an index signature, so it must be accessed with ['defaultAlpha'].
+@ptl/config:build: src/validator.ts(193,20): error TS4111: Property 'defaultAlpha' comes from an index signature, so it must be accessed with ['defaultAlpha'].
+@ptl/config:build: src/validator.ts(193,53): error TS4111: Property 'defaultAlpha' comes from an index signature, so it must be accessed with ['defaultAlpha'].
+@ptl/config:build: src/validator.ts(197,20): error TS4111: Property 'defaultAlpha' comes from an index signature, so it must be accessed with ['defaultAlpha'].
+@ptl/config:build: src/validator.ts(202,11): error TS4111: Property 'smoothing' comes from an index signature, so it must be accessed with ['smoothing'].
+@ptl/config:build: src/validator.ts(203,20): error TS4111: Property 'smoothing' comes from an index signature, so it must be accessed with ['smoothing'].
+@ptl/config:build: src/validator.ts(203,50): error TS4111: Property 'smoothing' comes from an index signature, so it must be accessed with ['smoothing'].
+@ptl/config:build: src/validator.ts(203,71): error TS4111: Property 'smoothing' comes from an index signature, so it must be accessed with ['smoothing'].
+@ptl/config:build: src/validator.ts(207,20): error TS4111: Property 'smoothing' comes from an index signature, so it must be accessed with ['smoothing'].
+@ptl/config:build: src/validator.ts(212,11): error TS4111: Property 'minConfidence' comes from an index signature, so it must be accessed with ['minConfidence'].
+@ptl/config:build: src/validator.ts(213,20): error TS4111: Property 'minConfidence' comes from an index signature, so it must be accessed with ['minConfidence'].
+@ptl/config:build: src/validator.ts(213,54): error TS4111: Property 'minConfidence' comes from an index signature, so it must be accessed with ['minConfidence'].
+@ptl/config:build: src/validator.ts(213,79): error TS4111: Property 'minConfidence' comes from an index signature, so it must be accessed with ['minConfidence'].
+@ptl/config:build: src/validator.ts(217,20): error TS4111: Property 'minConfidence' comes from an index signature, so it must be accessed with ['minConfidence'].
+@ptl/config:build: src/validator.ts(222,11): error TS4111: Property 'maxAlternatives' comes from an index signature, so it must be accessed with ['maxAlternatives'].
+@ptl/config:build: src/validator.ts(224,18): error TS4111: Property 'maxAlternatives' comes from an index signature, so it must be accessed with ['maxAlternatives'].
+@ptl/config:build: src/validator.ts(225,11): error TS4111: Property 'maxAlternatives' comes from an index signature, so it must be accessed with ['maxAlternatives'].
+@ptl/config:build: src/validator.ts(226,11): error TS4111: Property 'maxAlternatives' comes from an index signature, so it must be accessed with ['maxAlternatives'].
+@ptl/config:build: src/validator.ts(231,20): error TS4111: Property 'maxAlternatives' comes from an index signature, so it must be accessed with ['maxAlternatives'].
+@ptl/config:build: src/validator.ts(240,3): error TS6133: 'partial' is declared but its value is never read.
+@ptl/config:build: src/validator.ts(249,11): error TS4111: Property 'enabled' comes from an index signature, so it must be accessed with ['enabled'].
+@ptl/config:build: src/validator.ts(249,47): error TS4111: Property 'enabled' comes from an index signature, so it must be accessed with ['enabled'].
+@ptl/config:build: src/validator.ts(253,18): error TS4111: Property 'enabled' comes from an index signature, so it must be accessed with ['enabled'].
+@ptl/config:build: src/validator.ts(257,11): error TS4111: Property 'maxPropagationDepth' comes from an index signature, so it must be accessed with ['maxPropagationDepth'].
+@ptl/config:build: src/validator.ts(258,20): error TS4111: Property 'maxPropagationDepth' comes from an index signature, so it must be accessed with ['maxPropagationDepth'].
+@ptl/config:build: src/validator.ts(258,60): error TS4111: Property 'maxPropagationDepth' comes from an index signature, so it must be accessed with ['maxPropagationDepth'].
+@ptl/config:build: src/validator.ts(262,20): error TS4111: Property 'maxPropagationDepth' comes from an index signature, so it must be accessed with ['maxPropagationDepth'].
+@ptl/config:build: src/validator.ts(267,11): error TS4111: Property 'debounceDelay' comes from an index signature, so it must be accessed with ['debounceDelay'].
+@ptl/config:build: src/validator.ts(268,20): error TS4111: Property 'debounceDelay' comes from an index signature, so it must be accessed with ['debounceDelay'].
+@ptl/config:build: src/validator.ts(268,54): error TS4111: Property 'debounceDelay' comes from an index signature, so it must be accessed with ['debounceDelay'].
+@ptl/config:build: src/validator.ts(272,20): error TS4111: Property 'debounceDelay' comes from an index signature, so it must be accessed with ['debounceDelay'].
+@ptl/config:build: src/validator.ts(281,3): error TS6133: 'partial' is declared but its value is never read.
+@ptl/config:build: src/validator.ts(290,11): error TS4111: Property 'include' comes from an index signature, so it must be accessed with ['include'].
+@ptl/config:build: src/validator.ts(290,55): error TS4111: Property 'include' comes from an index signature, so it must be accessed with ['include'].
+@ptl/config:build: src/validator.ts(294,18): error TS4111: Property 'include' comes from an index signature, so it must be accessed with ['include'].
+@ptl/config:build: src/validator.ts(298,11): error TS4111: Property 'exclude' comes from an index signature, so it must be accessed with ['exclude'].
+@ptl/config:build: src/validator.ts(298,55): error TS4111: Property 'exclude' comes from an index signature, so it must be accessed with ['exclude'].
+@ptl/config:build: src/validator.ts(302,18): error TS4111: Property 'exclude' comes from an index signature, so it must be accessed with ['exclude'].
+@ptl/config:build: src/validator.ts(306,11): error TS4111: Property 'maxFileSize' comes from an index signature, so it must be accessed with ['maxFileSize'].
+@ptl/config:build: src/validator.ts(307,20): error TS4111: Property 'maxFileSize' comes from an index signature, so it must be accessed with ['maxFileSize'].
+@ptl/config:build: src/validator.ts(307,52): error TS4111: Property 'maxFileSize' comes from an index signature, so it must be accessed with ['maxFileSize'].
+@ptl/config:build: src/validator.ts(311,20): error TS4111: Property 'maxFileSize' comes from an index signature, so it must be accessed with ['maxFileSize'].
+@ptl/config:build: src/validator.ts(320,3): error TS6133: 'partial' is declared but its value is never read.
+@ptl/config:build: src/validator.ts(329,11): error TS4111: Property 'format' comes from an index signature, so it must be accessed with ['format'].
+@ptl/config:build: src/validator.ts(331,36): error TS4111: Property 'format' comes from an index signature, so it must be accessed with ['format'].
+@ptl/config:build: src/validator.ts(335,20): error TS4111: Property 'format' comes from an index signature, so it must be accessed with ['format'].
+@ptl/config:build: src/validator.ts(344,3): error TS6133: 'partial' is declared but its value is never read.
+@ptl/config:build: src/validator.ts(353,11): error TS4111: Property 'enabled' comes from an index signature, so it must be accessed with ['enabled'].
+@ptl/config:build: src/validator.ts(353,47): error TS4111: Property 'enabled' comes from an index signature, so it must be accessed with ['enabled'].
+@ptl/config:build: src/validator.ts(357,18): error TS4111: Property 'enabled' comes from an index signature, so it must be accessed with ['enabled'].
+@ptl/config:build: src/validator.ts(361,11): error TS4111: Property 'directory' comes from an index signature, so it must be accessed with ['directory'].
+@ptl/config:build: src/validator.ts(361,49): error TS4111: Property 'directory' comes from an index signature, so it must be accessed with ['directory'].
+@ptl/config:build: src/validator.ts(365,18): error TS4111: Property 'directory' comes from an index signature, so it must be accessed with ['directory'].
+@ptl/config:build: src/validator.ts(369,11): error TS4111: Property 'ttl' comes from an index signature, so it must be accessed with ['ttl'].
+@ptl/config:build: src/validator.ts(370,20): error TS4111: Property 'ttl' comes from an index signature, so it must be accessed with ['ttl'].
+@ptl/config:build: src/validator.ts(370,44): error TS4111: Property 'ttl' comes from an index signature, so it must be accessed with ['ttl'].
+@ptl/config:build: src/validator.ts(374,20): error TS4111: Property 'ttl' comes from an index signature, so it must be accessed with ['ttl'].
+@ptl/config:build: src/validator.ts(379,11): error TS4111: Property 'maxSize' comes from an index signature, so it must be accessed with ['maxSize'].
+@ptl/config:build: src/validator.ts(380,20): error TS4111: Property 'maxSize' comes from an index signature, so it must be accessed with ['maxSize'].
+@ptl/config:build: src/validator.ts(380,48): error TS4111: Property 'maxSize' comes from an index signature, so it must be accessed with ['maxSize'].
+@ptl/config:build: src/validator.ts(384,20): error TS4111: Property 'maxSize' comes from an index signature, so it must be accessed with ['maxSize'].
+@ptl/config:build: 
+@ptl/config:build: [31mError: error occurred in dts build
+@ptl/config:build:     at Worker.<anonymous> (S:\PTL\node_modules\.pnpm\tsup@8.5.1_typescript@5.3.3\node_modules\tsup\dist\index.js:1545:26)
+@ptl/config:build:     at Worker.emit (node:events:517:28)
+@ptl/config:build:     at MessagePort.<anonymous> (node:internal/worker:256:53)
+@ptl/config:build:     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:786:20)
+@ptl/config:build:     at exports.emitMessage (node:internal/per_context/messageport:23:28)[39m
+@ptl/config:build: [31mDTS[39m [31mBuild error[39m
+@ptl/config:build: ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.
+@ptl/lattice-visualizer:build: src/utils/layout.ts(77,19): error TS2379: Argument of type '{ x: number; y: number; id?: string; label?: string; confidence?: number; confidenceInterval?: readonly [number, number]; isInferred?: boolean; isAlternative?: boolean; depth?: number; parents?: readonly string[]; children?: readonly string[]; metadata?: Record<...>; }' is not assignable to parameter of type 'VisualizationNode' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+@ptl/lattice-visualizer:build:   Property 'id' is optional in type '{ x: number; y: number; id?: string; label?: string; confidence?: number; confidenceInterval?: readonly [number, number]; isInferred?: boolean; isAlternative?: boolean; depth?: number; parents?: readonly string[]; children?: readonly string[]; metadata?: Record<...>; }' but required in type 'VisualizationNode'.
+@ptl/lattice-visualizer:build: 
+@ptl/lattice-visualizer:build: [31mError: error occurred in dts build
+@ptl/lattice-visualizer:build:     at Worker.<anonymous> (S:\PTL\node_modules\.pnpm\tsup@8.5.1_typescript@5.3.3\node_modules\tsup\dist\index.js:1545:26)
+@ptl/lattice-visualizer:build:     at Worker.emit (node:events:517:28)
+@ptl/lattice-visualizer:build:     at MessagePort.<anonymous> (node:internal/worker:256:53)
+@ptl/lattice-visualizer:build:     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:786:20)
+@ptl/lattice-visualizer:build:     at exports.emitMessage (node:internal/per_context/messageport:23:28)[39m
+@ptl/lattice-visualizer:build: [31mDTS[39m [31mBuild error[39m
+@ptl/lattice-visualizer:build: ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.
+@ptl/config:build: ERROR: command finished with error: command (S:\PTL\packages\config) C:\Users\sgbil\AppData\Roaming\npm\pnpm.cmd run build exited (1)
+@ptl/config#build: command (S:\PTL\packages\config) C:\Users\sgbil\AppData\Roaming\npm\pnpm.cmd run build exited (1)
+
+ Tasks:    2 successful, 6 total
+Cached:    2 cached, 6 total
+  Time:    11.009s 
+Failed:    @ptl/config#build
+
+ ERROR  run failed: command  exited (1)

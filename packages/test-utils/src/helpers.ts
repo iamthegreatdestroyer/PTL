@@ -2,56 +2,50 @@
  * Test helper utilities for PTL
  */
 
-import { BayesianTypeInference, type TypeInference } from '@ptl/core';
+import { createInferenceEngine } from '@ptl/core';
+import type { TypeInference } from './assertions.js';
 
 /**
- * Create a BayesianTypeInference instance for testing
+ * Create an inference engine instance for testing
  */
-export function createTestInference(): BayesianTypeInference {
-  return new BayesianTypeInference({
-    strict: false,
+export function createTestEngine() {
+  return createInferenceEngine({
+    includeStdlib: true,
+    incremental: false,
     minConfidence: 0.1,
-    debug: true,
   });
 }
 
 /**
- * Analyze code and return inferences
+ * Analyze code and return inferences (mock — uses engine symbol observation)
  */
 export async function analyzeCode(
   code: string,
   options?: {
     fileName?: string;
-    strict?: boolean;
   }
 ): Promise<TypeInference[]> {
-  const inference = new BayesianTypeInference({
-    strict: options?.strict ?? false,
-    debug: true,
-  });
+  const engine = createTestEngine();
+  const fileName = options?.fileName ?? 'test.ts';
+  const result = engine.analyzeFile(fileName, code);
 
-  const result = await inference.analyzeSource(code, {
-    fileName: options?.fileName ?? 'test.ts',
+  return result.symbols.map((s) => {
+    const inf = engine.infer(s.id);
+    return {
+      type: inf.mostLikely.typeId,
+      confidence: inf.mostLikely.probability,
+    };
   });
-
-  return result.inferences;
 }
 
 /**
- * Find inference by name
+ * Find inference by type string
  */
 export function findInference(
   inferences: TypeInference[],
-  name: string
+  type: string
 ): TypeInference | undefined {
-  return inferences.find((i) => i.name === name);
-}
-
-/**
- * Get inferences by kind (variable, parameter, function, etc.)
- */
-export function filterByKind(inferences: TypeInference[], kind: string): TypeInference[] {
-  return inferences.filter((i) => i.kind === kind);
+  return inferences.find((i) => i.type === type);
 }
 
 /**
@@ -76,7 +70,7 @@ export function createTestSource(lines: string[]): string {
 }
 
 /**
- * Wait for async analysis to complete
+ * Wait for async operations to complete
  */
 export function waitFor(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));

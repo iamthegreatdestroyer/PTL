@@ -2,7 +2,14 @@
  * Mock inference engine for testing
  */
 
-import type { TypeInference, Evidence, ConfidenceLevel } from '@ptl/core';
+import type { TypeInference } from '../assertions.js';
+
+export interface Evidence {
+  type: string;
+  confidence: number;
+  description?: string;
+  source?: string;
+}
 
 /**
  * Mock inference result builder
@@ -90,7 +97,7 @@ export function createMockInferenceEngine() {
       inferences.set(fileName, results);
     },
 
-    async analyzeSource(code: string, options?: { fileName?: string }) {
+    async analyzeSource(_code: string, options?: { fileName?: string }) {
       const fileName = options?.fileName ?? 'test.ts';
       return {
         inferences: inferences.get(fileName) ?? [],

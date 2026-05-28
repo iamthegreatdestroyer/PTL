@@ -1,6 +1,6 @@
 {
   "name": "@ptl/cli",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Command-line interface for PTL - Probabilistic Type Lattice analyzer",
   "type": "module",
   "bin": {
@@ -34,6 +34,7 @@
     "@ptl/type-priors": "workspace:*",
     "chalk": "^5.3.0",
     "commander": "^12.0.0",
+    "glob": "^11.0.0",
     "ora": "^8.0.1",
     "figures": "^6.0.1",
     "picocolors": "^1.0.0",

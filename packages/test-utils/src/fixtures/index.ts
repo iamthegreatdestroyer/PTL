@@ -2,5 +2,5 @@
  * Test fixtures for PTL
  */
 
-export * from './code-samples';
-export * from './expected-results';
+export * from './code-samples.js';
+export * from './expected-results.js';

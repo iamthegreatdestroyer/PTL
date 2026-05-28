@@ -44,7 +44,7 @@ export function formatOutput(
 function formatInference(result: InferenceResult, options: FormatOptions): string {
   const c = options.color ? chalk : createNoopChalk();
 
-  const confidence = result.confidence;
+  const confidence = result.mostLikely.probability;
   const confidencePercent = Math.round(confidence * 100);
 
   // Color based on confidence
@@ -53,16 +53,10 @@ function formatInference(result: InferenceResult, options: FormatOptions): strin
   const icon =
     confidence >= 0.8 ? figures.tick : confidence >= 0.5 ? figures.warning : figures.cross;
 
-  let line = `${colorFn(icon)} ${c.bold(result.type)}`;
+  let line = `${colorFn(icon)} ${c.bold(result.mostLikely.typeId)}`;
 
   // Add confidence
   line += ` ${c.gray('(')}${colorFn(confidencePercent + '%')}${c.gray(')')}`;
-
-  // Add confidence interval
-  if (options.showConfidenceIntervals && result.confidenceInterval) {
-    const [low, high] = result.confidenceInterval;
-    line += ` ${c.gray(`[${Math.round(low * 100)}%-${Math.round(high * 100)}%]`)}`;
-  }
 
   return line;
 }

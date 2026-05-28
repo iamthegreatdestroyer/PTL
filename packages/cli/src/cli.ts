@@ -37,6 +37,7 @@ export function createCLI(): Command {
     .option('--max-depth <depth>', 'Maximum depth for inference', '10')
     .option('-t, --threshold <threshold>', 'Confidence threshold (0-1)', '0.5')
     .option('-o, --output <file>', 'Write results to file')
+    .option('--traces <file>', 'Load execution traces from JSON file for runtime type evidence')
     .action(async (files, options) => {
       const result = await analyzeCommand({
         files: files.length > 0 ? files : ['.'],
@@ -44,6 +45,7 @@ export function createCLI(): Command {
         maxDepth: parseInt(options.maxDepth, 10),
         threshold: parseFloat(options.threshold),
         output: options.output,
+        traces: options.traces,
         ...getGlobalOptions(program),
       });
       process.exitCode = result.exitCode;
@@ -109,13 +111,14 @@ export function createCLI(): Command {
  */
 function getGlobalOptions(program: Command) {
   const opts = program.opts();
-  return {
-    config: opts.config,
-    verbose: opts.verbose ?? false,
-    format: opts.format ?? 'text',
-    quiet: opts.quiet ?? false,
-    color: opts.color !== false,
+  const config = opts['config'] as string | undefined;
+  const base = {
+    verbose: (opts['verbose'] ?? false) as boolean,
+    format: ((opts['format'] ?? 'text') as 'text' | 'json' | 'sarif'),
+    quiet: (opts['quiet'] ?? false) as boolean,
+    color: opts['color'] !== false,
   };
+  return config !== undefined ? { ...base, config } : base;
 }
 
 /**
@@ -125,11 +128,12 @@ export async function runCLI(argv: string[]): Promise<number> {
   try {
     const program = createCLI();
     await program.parseAsync(argv);
-    return process.exitCode ?? 0;
+    const code = process.exitCode;
+    return typeof code === 'number' ? code : 0;
   } catch (error) {
     if (error instanceof Error) {
       console.error(chalk.red('Error:'), error.message);
-      if (process.env.DEBUG) {
+      if (process.env['DEBUG'] === 'true' || process.env['DEBUG'] === '1') {
         console.error(error.stack);
       }
     }

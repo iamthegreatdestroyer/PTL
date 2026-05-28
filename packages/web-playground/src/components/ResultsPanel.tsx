@@ -48,7 +48,8 @@ export function ResultsPanel() {
 
     inferences.forEach((inf) => {
       const bucket = Math.min(Math.floor(inf.confidence * 10), 9);
-      buckets[bucket].count++;
+      const b = buckets[bucket];
+      if (b !== undefined) b.count++;
     });
 
     return buckets;

@@ -6,7 +6,13 @@ export default defineConfig({
     schema: 'src/schema.ts',
   },
   format: ['esm'],
-  dts: true,
+  dts: {
+    resolve: false,
+    compilerOptions: {
+      skipLibCheck: true,
+      noEmitOnError: false,
+    },
+  },
   sourcemap: true,
   clean: true,
   splitting: true,

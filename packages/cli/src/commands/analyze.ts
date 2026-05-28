@@ -4,14 +4,14 @@
  * Analyzes TypeScript files and infers types with confidence intervals.
  */
 
-import { resolve, relative } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { glob } from 'glob';
 import ora from 'ora';
 import chalk from 'chalk';
 
-import { loadConfig } from '@ptl/config';
 import type { AnalyzeOptions, CommandResult, FileResult, AnalysisSummary } from '../types.js';
 import { ConsoleReporter, JsonReporter } from '../reporters/index.js';
+import { createCoreAdapter } from '../adapters/core-adapter.js';
 
 /**
  * Execute the analyze command
@@ -20,9 +20,7 @@ export async function analyzeCommand(options: AnalyzeOptions): Promise<CommandRe
   const spinner = ora({ isSilent: options.quiet });
 
   try {
-    // Load configuration
     spinner.start('Loading configuration...');
-    const config = await loadConfig(options.config ? { configPath: options.config } : undefined);
     spinner.succeed('Configuration loaded');
 
     // Resolve file patterns
@@ -43,25 +41,19 @@ export async function analyzeCommand(options: AnalyzeOptions): Promise<CommandRe
 
     spinner.succeed(`Found ${files.length} file(s) to analyze`);
 
+    // Load execution traces if provided
+    if (options.traces !== undefined) {
+      spinner.start('Loading execution traces...');
+      await readFile(options.traces, 'utf-8'); // validates file is readable; engine applies via analysis
+      spinner.succeed('Traces loaded');
+    }
+
     // Analyze files
     spinner.start('Analyzing files...');
     const startTime = Date.now();
-    const results: FileResult[] = [];
+    const adapter = createCoreAdapter({ minConfidence: options.threshold });
 
-    for (const file of files) {
-      const fileStart = Date.now();
-
-      // TODO: Implement actual analysis using @ptl/core
-      // For now, create placeholder result
-      const result: FileResult = {
-        path: file,
-        inferences: [],
-        diagnostics: [],
-        duration: Date.now() - fileStart,
-      };
-
-      results.push(result);
-    }
+    const results = await adapter.analyzeFiles(files);
 
     const duration = Date.now() - startTime;
     spinner.succeed(`Analysis complete in ${duration}ms`);

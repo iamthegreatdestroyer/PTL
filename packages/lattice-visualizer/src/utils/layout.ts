@@ -57,7 +57,7 @@ export function layoutLattice(
 
   for (const node of nodes) {
     const level = levels.get(node.depth) ?? [];
-    level.push({ ...node });
+    level.push({ ...node } as VisualizationNode);
     levels.set(node.depth, level);
     maxDepth = Math.max(maxDepth, node.depth);
   }
@@ -78,7 +78,7 @@ export function layoutLattice(
         ...node,
         x: startX + i * siblingSpacing,
         y: depth * levelSpacing,
-      });
+      } as VisualizationNode);
     }
   }
 

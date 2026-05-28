@@ -71,7 +71,7 @@ export class MockFileSystem {
     for (const filePath of this.files.keys()) {
       if (filePath.startsWith(normalizedPath + '/')) {
         const relative = filePath.slice(normalizedPath.length + 1);
-        const firstPart = relative.split('/')[0];
+        const firstPart = relative.split('/')[0] ?? relative;
         entries.add(firstPart);
       }
     }

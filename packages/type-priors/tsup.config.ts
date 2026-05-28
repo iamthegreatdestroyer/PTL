@@ -6,7 +6,12 @@ export default defineConfig({
     data: 'src/data.ts',
   },
   format: ['esm'],
-  dts: true,
+  dts: {
+    resolve: true,
+    compilerOptions: {
+      composite: false,
+    },
+  },
   sourcemap: true,
   clean: true,
   splitting: true,

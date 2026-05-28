@@ -4,8 +4,30 @@
  * Type definitions for CLI commands and options.
  */
 
-import type { PTLConfig } from '@ptl/config';
-import type { InferenceResult, DiagnosticMessage } from '@ptl/core';
+export interface InferenceRecord {
+  readonly id: string;
+  readonly name: string;
+  readonly type: string;
+  readonly confidence: number;
+  readonly alternatives: ReadonlyArray<{ readonly type: string; readonly probability: number }>;
+  readonly location?: { readonly startLine: number; readonly startColumn: number };
+}
+
+export interface SourceLocation {
+  readonly file: string;
+  readonly line: number;
+  readonly column: number;
+  readonly endLine?: number;
+  readonly endColumn?: number;
+}
+
+export interface DiagnosticMessage {
+  readonly severity: 'error' | 'warning' | 'info' | 'hint';
+  readonly message: string;
+  readonly location?: SourceLocation;
+  readonly codeFrame?: string;
+  readonly related?: ReadonlyArray<{ readonly message: string; readonly location?: SourceLocation }>;
+}
 
 /**
  * CLI-wide options
@@ -59,7 +81,7 @@ export interface CommandResult {
   /**
    * Inference results (if applicable)
    */
-  readonly results?: readonly InferenceResult[];
+  readonly results?: readonly InferenceRecord[];
 }
 
 /**
@@ -90,6 +112,11 @@ export interface AnalyzeOptions extends CLIOptions {
    * Output file path
    */
   readonly output?: string;
+
+  /**
+   * Path to execution traces JSON file for runtime type evidence
+   */
+  readonly traces?: string;
 }
 
 /**
@@ -174,7 +201,7 @@ export interface FileResult {
   /**
    * Inference results
    */
-  readonly inferences: readonly InferenceResult[];
+  readonly inferences: readonly InferenceRecord[];
 
   /**
    * Diagnostics for this file

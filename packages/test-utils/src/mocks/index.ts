@@ -2,5 +2,5 @@
  * Mock exports for testing
  */
 
-export * from './inference';
-export * from './file-system';
+export * from './inference.js';
+export * from './file-system.js';

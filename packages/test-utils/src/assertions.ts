@@ -2,7 +2,16 @@
  * Custom test assertions for PTL type inference
  */
 
-import type { TypeInference, ConfidenceLevel } from '@ptl/core';
+export type ConfidenceLevel = 'high' | 'medium' | 'low';
+
+export interface TypeInference {
+  type: string;
+  confidence: number;
+  name?: string;
+  kind?: string;
+  evidence?: Array<{ type: string }>;
+  location?: { line: number; column: number };
+}
 
 /**
  * Assert that a type inference has the expected type
@@ -78,7 +87,7 @@ export function assertHasEvidence(
   evidenceTypes: string[],
   message?: string
 ): void {
-  const foundTypes = new Set(inference.evidence?.map((e) => e.type) || []);
+  const foundTypes = new Set(inference.evidence?.map((e) => e.type) ?? []);
 
   for (const type of evidenceTypes) {
     if (!foundTypes.has(type)) {
@@ -118,7 +127,7 @@ export function assertUnionContains(
     throw new Error(message || `Expected union type but got "${inference.type}"`);
   }
 
-  const members = unionMatch[1].split(' | ').map((m) => m.trim());
+  const members = (unionMatch[1] ?? '').split(' | ').map((m) => m.trim());
 
   for (const expected of expectedMembers) {
     if (!members.includes(expected)) {

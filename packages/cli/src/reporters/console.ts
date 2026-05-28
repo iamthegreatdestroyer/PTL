@@ -32,7 +32,7 @@ export class ConsoleReporter extends Reporter {
   async report(
     results: readonly FileResult[],
     summary: AnalysisSummary,
-    options: CLIOptions
+    _options: CLIOptions
   ): Promise<void> {
     // File results
     for (const result of results) {
@@ -76,6 +76,7 @@ export class ConsoleReporter extends Reporter {
 
     for (const inference of result.inferences) {
       const confidence = inference.confidence;
+      const typeName = inference.type;
       const confidenceStr = `${Math.round(confidence * 100)}%`;
 
       const color = confidence >= 0.8 ? c.green : confidence >= 0.5 ? c.yellow : c.red;
@@ -84,7 +85,7 @@ export class ConsoleReporter extends Reporter {
         confidence >= 0.8 ? figures.tick : confidence >= 0.5 ? figures.warning : figures.cross;
 
       if (this.options.verbose || confidence < 0.8) {
-        lines.push(`  ${color(icon)} ${inference.type} (${color(confidenceStr)})`);
+        lines.push(`  ${color(icon)} ${typeName} (${color(confidenceStr)})`);
       }
     }
 

@@ -7,7 +7,7 @@
 import chalk from 'chalk';
 import figures from 'figures';
 
-import type { DiagnosticMessage, SourceLocation } from '@ptl/core';
+import type { DiagnosticMessage, SourceLocation } from '../types.js';
 
 export interface DiagnosticFormatOptions {
   readonly color: boolean;
@@ -29,7 +29,7 @@ export function formatDiagnostic(
   options: Partial<DiagnosticFormatOptions> = {}
 ): string {
   const opts = { ...DEFAULT_OPTIONS, ...options };
-  const c = opts.color ? chalk : createNoopChalk();
+  const c: ChalkLike = opts.color ? chalk : createNoopChalk();
 
   const lines: string[] = [];
 
@@ -43,7 +43,7 @@ export function formatDiagnostic(
   lines.push(`${prefix}${colorFn(icon)} ${colorFn(diagnostic.severity)}: ${diagnostic.message}`);
 
   // Code frame (if available)
-  if (opts.showCode && diagnostic.codeFrame) {
+  if (opts.showCode && diagnostic.codeFrame !== undefined) {
     lines.push('');
     lines.push(formatCodeFrame(diagnostic.codeFrame, opts));
   }
@@ -89,12 +89,11 @@ function formatCodeFrame(codeFrame: string, options: DiagnosticFormatOptions): s
     .join('\n');
 }
 
-/**
- * Get severity style
- */
+type ChalkLike = { red: (s: string) => string; yellow: (s: string) => string; blue: (s: string) => string; cyan: (s: string) => string; gray: (s: string) => string; white: (s: string) => string };
+
 function getSeverityStyle(
   severity: 'error' | 'warning' | 'info' | 'hint',
-  c: typeof chalk
+  c: ChalkLike
 ): { icon: string; colorFn: (s: string) => string } {
   switch (severity) {
     case 'error':

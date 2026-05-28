@@ -1,6 +1,6 @@
 {
   "name": "@ptl/config",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Configuration loading and validation for PTL",
   "type": "module",
   "main": "./dist/index.js",

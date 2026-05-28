@@ -26,7 +26,7 @@ async function analyzeCode(code: string): Promise<InferenceResult[]> {
           // Function parameters
           const functionMatch = line.match(/function\s+(\w+)\s*\(([^)]*)\)/);
           if (functionMatch) {
-            const params = functionMatch[2].split(',').filter((p) => p.trim());
+            const params = (functionMatch[2] ?? '').split(',').filter((p) => p.trim());
             params.forEach((param) => {
               const col = line.indexOf(param.trim());
               inferences.push({
@@ -51,7 +51,7 @@ async function analyzeCode(code: string): Promise<InferenceResult[]> {
           // Variable declarations
           const varMatch = line.match(/(?:const|let|var)\s+(\w+)\s*=/);
           if (varMatch) {
-            const varName = varMatch[1];
+            const varName = varMatch[1] ?? '';
             const col = line.indexOf(varName);
             let inferredType = 'unknown';
             let confidence = 0.5;
