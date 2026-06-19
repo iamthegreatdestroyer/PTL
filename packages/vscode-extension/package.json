@@ -208,7 +208,7 @@
     "@vscode/vsce": "^2.22.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
-    "vitest": "^1.2.0"
+    "vitest": "^4.0.18"
   },
   "repository": {
     "type": "git",
