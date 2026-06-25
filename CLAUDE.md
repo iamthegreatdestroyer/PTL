@@ -44,8 +44,8 @@ git tag v1.0.0 && git push origin v1.0.0
 ## Done Criteria
 - [x] `npm build` succeeds
 - [x] `npm test` passes — zero failures
-- [ ] `ptl analyze` CLI produces type annotations
-- [ ] `v1.0.0` tag pushed
+- [x] `ptl analyze` CLI produces type annotations
+- [x] `v1.0.0` tag pushed
 
 ## Completion Signal
 ```bash
