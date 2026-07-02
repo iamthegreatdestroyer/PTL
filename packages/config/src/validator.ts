@@ -138,43 +138,135 @@ export function validatePartialConfig(
   return ok(merged);
 }
 
+// ── Shared field-validation helpers ─────────────────────────────────────────
+// Extracted 2026-07-02: the six validate*Config functions below previously
+// copy-pasted the same object-guard + per-field type/range checks (~10x
+// duplication flagged by running NLCI inward on the ecosystem — see
+// ECOSYSTEM_SELF_ANALYSIS.md). Behaviour and error messages are unchanged.
+
+function expectObject(
+  config: unknown,
+  section: string,
+  errors: ConfigValidationError[]
+): Record<string, unknown> | null {
+  if (typeof config !== 'object' || config === null) {
+    errors.push({ path: section, message: 'Must be an object', value: config });
+    return null;
+  }
+  return config as Record<string, unknown>;
+}
+
+function checkBoolean(
+  cfg: Record<string, unknown>,
+  section: string,
+  key: string,
+  errors: ConfigValidationError[]
+): void {
+  if (cfg[key] !== undefined && typeof cfg[key] !== 'boolean') {
+    errors.push({ path: `${section}.${key}`, message: 'Must be a boolean', value: cfg[key] });
+  }
+}
+
+function checkString(
+  cfg: Record<string, unknown>,
+  section: string,
+  key: string,
+  errors: ConfigValidationError[]
+): void {
+  if (cfg[key] !== undefined && typeof cfg[key] !== 'string') {
+    errors.push({ path: `${section}.${key}`, message: 'Must be a string', value: cfg[key] });
+  }
+}
+
+function checkStringArray(
+  cfg: Record<string, unknown>,
+  section: string,
+  key: string,
+  errors: ConfigValidationError[]
+): void {
+  if (cfg[key] !== undefined && !isStringArray(cfg[key])) {
+    errors.push({
+      path: `${section}.${key}`,
+      message: 'Must be an array of strings',
+      value: cfg[key],
+    });
+  }
+}
+
+function checkNumberRange(
+  cfg: Record<string, unknown>,
+  section: string,
+  key: string,
+  min: number,
+  max: number,
+  errors: ConfigValidationError[]
+): void {
+  const v = cfg[key];
+  if (v !== undefined && (typeof v !== 'number' || v < min || v > max)) {
+    errors.push({
+      path: `${section}.${key}`,
+      message: `Must be a number between ${min} and ${max}`,
+      value: v,
+    });
+  }
+}
+
+function checkPositiveNumber(
+  cfg: Record<string, unknown>,
+  section: string,
+  key: string,
+  errors: ConfigValidationError[]
+): void {
+  const v = cfg[key];
+  if (v !== undefined && (typeof v !== 'number' || v <= 0)) {
+    errors.push({ path: `${section}.${key}`, message: 'Must be a positive number', value: v });
+  }
+}
+
+function checkNonNegativeNumber(
+  cfg: Record<string, unknown>,
+  section: string,
+  key: string,
+  errors: ConfigValidationError[]
+): void {
+  const v = cfg[key];
+  if (v !== undefined && (typeof v !== 'number' || v < 0)) {
+    errors.push({
+      path: `${section}.${key}`,
+      message: 'Must be a non-negative number',
+      value: v,
+    });
+  }
+}
+
+function checkEnum(
+  cfg: Record<string, unknown>,
+  section: string,
+  key: string,
+  valid: string[],
+  errors: ConfigValidationError[]
+): void {
+  if (cfg[key] !== undefined && !valid.includes(cfg[key] as string)) {
+    errors.push({
+      path: `${section}.${key}`,
+      message: `Must be one of: ${valid.join(', ')}`,
+      value: cfg[key],
+    });
+  }
+}
+
+// ── Per-section validators (now thin, via the helpers above) ─────────────────
+
 function validateLatticeConfig(
   config: unknown,
   errors: ConfigValidationError[],
   _partial = false
 ): void {
-  if (typeof config !== 'object' || config === null) {
-    errors.push({ path: 'lattice', message: 'Must be an object', value: config });
-    return;
-  }
-
-  const cfg = config as Record<string, unknown>;
-
-  if (cfg['includeStdlib'] !== undefined && typeof cfg['includeStdlib'] !== 'boolean') {
-    errors.push({
-      path: 'lattice.includeStdlib',
-      message: 'Must be a boolean',
-      value: cfg['includeStdlib'],
-    });
-  }
-
-  if (cfg['includeDom'] !== undefined && typeof cfg['includeDom'] !== 'boolean') {
-    errors.push({
-      path: 'lattice.includeDom',
-      message: 'Must be a boolean',
-      value: cfg['includeDom'],
-    });
-  }
-
-  if (cfg['maxDepth'] !== undefined) {
-    if (typeof cfg['maxDepth'] !== 'number' || cfg['maxDepth'] < 1 || cfg['maxDepth'] > 100) {
-      errors.push({
-        path: 'lattice.maxDepth',
-        message: 'Must be a number between 1 and 100',
-        value: cfg['maxDepth'],
-      });
-    }
-  }
+  const cfg = expectObject(config, 'lattice', errors);
+  if (!cfg) return;
+  checkBoolean(cfg, 'lattice', 'includeStdlib', errors);
+  checkBoolean(cfg, 'lattice', 'includeDom', errors);
+  checkNumberRange(cfg, 'lattice', 'maxDepth', 1, 100, errors);
 }
 
 function validateBayesianConfig(
@@ -182,60 +274,12 @@ function validateBayesianConfig(
   errors: ConfigValidationError[],
   _partial = false
 ): void {
-  if (typeof config !== 'object' || config === null) {
-    errors.push({ path: 'bayesian', message: 'Must be an object', value: config });
-    return;
-  }
-
-  const cfg = config as Record<string, unknown>;
-
-  if (cfg['defaultAlpha'] !== undefined) {
-    if (typeof cfg['defaultAlpha'] !== 'number' || cfg['defaultAlpha'] <= 0) {
-      errors.push({
-        path: 'bayesian.defaultAlpha',
-        message: 'Must be a positive number',
-        value: cfg['defaultAlpha'],
-      });
-    }
-  }
-
-  if (cfg['smoothing'] !== undefined) {
-    if (typeof cfg['smoothing'] !== 'number' || cfg['smoothing'] < 0 || cfg['smoothing'] > 1) {
-      errors.push({
-        path: 'bayesian.smoothing',
-        message: 'Must be a number between 0 and 1',
-        value: cfg['smoothing'],
-      });
-    }
-  }
-
-  if (cfg['minConfidence'] !== undefined) {
-    if (
-      typeof cfg['minConfidence'] !== 'number' ||
-      cfg['minConfidence'] < 0 ||
-      cfg['minConfidence'] > 1
-    ) {
-      errors.push({
-        path: 'bayesian.minConfidence',
-        message: 'Must be a number between 0 and 1',
-        value: cfg['minConfidence'],
-      });
-    }
-  }
-
-  if (cfg['maxAlternatives'] !== undefined) {
-    if (
-      typeof cfg['maxAlternatives'] !== 'number' ||
-      cfg['maxAlternatives'] < 1 ||
-      cfg['maxAlternatives'] > 20
-    ) {
-      errors.push({
-        path: 'bayesian.maxAlternatives',
-        message: 'Must be a number between 1 and 20',
-        value: cfg['maxAlternatives'],
-      });
-    }
-  }
+  const cfg = expectObject(config, 'bayesian', errors);
+  if (!cfg) return;
+  checkPositiveNumber(cfg, 'bayesian', 'defaultAlpha', errors);
+  checkNumberRange(cfg, 'bayesian', 'smoothing', 0, 1, errors);
+  checkNumberRange(cfg, 'bayesian', 'minConfidence', 0, 1, errors);
+  checkNumberRange(cfg, 'bayesian', 'maxAlternatives', 1, 20, errors);
 }
 
 function validateIncrementalConfig(
@@ -243,40 +287,11 @@ function validateIncrementalConfig(
   errors: ConfigValidationError[],
   _partial = false
 ): void {
-  if (typeof config !== 'object' || config === null) {
-    errors.push({ path: 'incremental', message: 'Must be an object', value: config });
-    return;
-  }
-
-  const cfg = config as Record<string, unknown>;
-
-  if (cfg['enabled'] !== undefined && typeof cfg['enabled'] !== 'boolean') {
-    errors.push({
-      path: 'incremental.enabled',
-      message: 'Must be a boolean',
-      value: cfg['enabled'],
-    });
-  }
-
-  if (cfg['maxPropagationDepth'] !== undefined) {
-    if (typeof cfg['maxPropagationDepth'] !== 'number' || cfg['maxPropagationDepth'] < 0) {
-      errors.push({
-        path: 'incremental.maxPropagationDepth',
-        message: 'Must be a non-negative number',
-        value: cfg['maxPropagationDepth'],
-      });
-    }
-  }
-
-  if (cfg['debounceDelay'] !== undefined) {
-    if (typeof cfg['debounceDelay'] !== 'number' || cfg['debounceDelay'] < 0) {
-      errors.push({
-        path: 'incremental.debounceDelay',
-        message: 'Must be a non-negative number',
-        value: cfg['debounceDelay'],
-      });
-    }
-  }
+  const cfg = expectObject(config, 'incremental', errors);
+  if (!cfg) return;
+  checkBoolean(cfg, 'incremental', 'enabled', errors);
+  checkNonNegativeNumber(cfg, 'incremental', 'maxPropagationDepth', errors);
+  checkNonNegativeNumber(cfg, 'incremental', 'debounceDelay', errors);
 }
 
 function validateAnalyzerConfig(
@@ -284,38 +299,11 @@ function validateAnalyzerConfig(
   errors: ConfigValidationError[],
   _partial = false
 ): void {
-  if (typeof config !== 'object' || config === null) {
-    errors.push({ path: 'analyzer', message: 'Must be an object', value: config });
-    return;
-  }
-
-  const cfg = config as Record<string, unknown>;
-
-  if (cfg['include'] !== undefined && !isStringArray(cfg['include'])) {
-    errors.push({
-      path: 'analyzer.include',
-      message: 'Must be an array of strings',
-      value: cfg['include'],
-    });
-  }
-
-  if (cfg['exclude'] !== undefined && !isStringArray(cfg['exclude'])) {
-    errors.push({
-      path: 'analyzer.exclude',
-      message: 'Must be an array of strings',
-      value: cfg['exclude'],
-    });
-  }
-
-  if (cfg['maxFileSize'] !== undefined) {
-    if (typeof cfg['maxFileSize'] !== 'number' || cfg['maxFileSize'] <= 0) {
-      errors.push({
-        path: 'analyzer.maxFileSize',
-        message: 'Must be a positive number',
-        value: cfg['maxFileSize'],
-      });
-    }
-  }
+  const cfg = expectObject(config, 'analyzer', errors);
+  if (!cfg) return;
+  checkStringArray(cfg, 'analyzer', 'include', errors);
+  checkStringArray(cfg, 'analyzer', 'exclude', errors);
+  checkPositiveNumber(cfg, 'analyzer', 'maxFileSize', errors);
 }
 
 function validateOutputConfig(
@@ -323,23 +311,9 @@ function validateOutputConfig(
   errors: ConfigValidationError[],
   _partial = false
 ): void {
-  if (typeof config !== 'object' || config === null) {
-    errors.push({ path: 'output', message: 'Must be an object', value: config });
-    return;
-  }
-
-  const cfg = config as Record<string, unknown>;
-
-  if (cfg['format'] !== undefined) {
-    const validFormats = ['json', 'sarif', 'text', 'markdown'];
-    if (!validFormats.includes(cfg['format'] as string)) {
-      errors.push({
-        path: 'output.format',
-        message: `Must be one of: ${validFormats.join(', ')}`,
-        value: cfg['format'],
-      });
-    }
-  }
+  const cfg = expectObject(config, 'output', errors);
+  if (!cfg) return;
+  checkEnum(cfg, 'output', 'format', ['json', 'sarif', 'text', 'markdown'], errors);
 }
 
 function validateCacheConfig(
@@ -347,48 +321,12 @@ function validateCacheConfig(
   errors: ConfigValidationError[],
   _partial = false
 ): void {
-  if (typeof config !== 'object' || config === null) {
-    errors.push({ path: 'cache', message: 'Must be an object', value: config });
-    return;
-  }
-
-  const cfg = config as Record<string, unknown>;
-
-  if (cfg['enabled'] !== undefined && typeof cfg['enabled'] !== 'boolean') {
-    errors.push({
-      path: 'cache.enabled',
-      message: 'Must be a boolean',
-      value: cfg['enabled'],
-    });
-  }
-
-  if (cfg['directory'] !== undefined && typeof cfg['directory'] !== 'string') {
-    errors.push({
-      path: 'cache.directory',
-      message: 'Must be a string',
-      value: cfg['directory'],
-    });
-  }
-
-  if (cfg['ttl'] !== undefined) {
-    if (typeof cfg['ttl'] !== 'number' || cfg['ttl'] <= 0) {
-      errors.push({
-        path: 'cache.ttl',
-        message: 'Must be a positive number',
-        value: cfg['ttl'],
-      });
-    }
-  }
-
-  if (cfg['maxSize'] !== undefined) {
-    if (typeof cfg['maxSize'] !== 'number' || cfg['maxSize'] <= 0) {
-      errors.push({
-        path: 'cache.maxSize',
-        message: 'Must be a positive number',
-        value: cfg['maxSize'],
-      });
-    }
-  }
+  const cfg = expectObject(config, 'cache', errors);
+  if (!cfg) return;
+  checkBoolean(cfg, 'cache', 'enabled', errors);
+  checkString(cfg, 'cache', 'directory', errors);
+  checkPositiveNumber(cfg, 'cache', 'ttl', errors);
+  checkPositiveNumber(cfg, 'cache', 'maxSize', errors);
 }
 
 function isStringArray(value: unknown): value is string[] {
