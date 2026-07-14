@@ -44,8 +44,11 @@ export async function analyzeCommand(options: AnalyzeOptions): Promise<CommandRe
     // Load execution traces if provided
     if (options.traces !== undefined) {
       spinner.start('Loading execution traces...');
-      await readFile(options.traces, 'utf-8'); // validates file is readable; engine applies via analysis
-      spinner.succeed('Traces loaded');
+      await readFile(options.traces, 'utf-8'); // validates file is readable
+      // NOTE: --traces is parsed and the file is validated, but traces are NOT
+      // yet wired into the Bayesian inference engine. Warn instead of implying
+      // they influenced the analysis.
+      spinner.warn('--traces is not yet applied (trace-guided inference is not implemented)');
     }
 
     // Analyze files
