@@ -162,6 +162,9 @@ export class DiagnosticsManager implements vscode.Disposable {
 
     // Consider ambiguous if there's an alternative within 20% confidence
     const topAlternative = inference.alternatives[0];
+    if (!topAlternative) {
+      return false;
+    }
     return topAlternative.confidence > inference.confidence - 0.2;
   }
 

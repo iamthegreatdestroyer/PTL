@@ -17,7 +17,7 @@ export class CommandsManager implements vscode.Disposable {
   private readonly disposables: vscode.Disposable[] = [];
 
   constructor(
-    private readonly context: vscode.ExtensionContext,
+    _context: vscode.ExtensionContext,
     private readonly analysisManager: AnalysisManager,
     private readonly diagnosticsManager: DiagnosticsManager,
     private readonly configManager: ConfigurationManager

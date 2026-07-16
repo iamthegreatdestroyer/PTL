@@ -52,15 +52,13 @@ export interface AnalysisError {
  * Manages document analysis
  */
 export class AnalysisManager implements vscode.Disposable {
-  private readonly configManager: ConfigurationManager;
   private readonly outputChannel: vscode.OutputChannel;
   private readonly cache = new Map<string, DocumentAnalysis>();
   private readonly pendingAnalysis = new Map<string, NodeJS.Timeout>();
 
   private readonly debounceDelay = 500; // ms
 
-  constructor(configManager: ConfigurationManager, outputChannel: vscode.OutputChannel) {
-    this.configManager = configManager;
+  constructor(_configManager: ConfigurationManager, outputChannel: vscode.OutputChannel) {
     this.outputChannel = outputChannel;
   }
 

@@ -18,11 +18,5 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"],
-  "references": [
-    { "path": "../shared" },
-    { "path": "../config" },
-    { "path": "../core" },
-    { "path": "../type-priors" }
-  ]
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

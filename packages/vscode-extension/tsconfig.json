@@ -6,10 +6,10 @@
     "lib": ["ES2022"],
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "composite": true,
-    "tsBuildInfoFile": "./dist/.tsbuildinfo"
+    "composite": false,
+    "verbatimModuleSyntax": false,
+    "importHelpers": false
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "out", "**/*.test.ts"],
-  "references": [{ "path": "../shared" }, { "path": "../config" }, { "path": "../core" }]
+  "exclude": ["node_modules", "dist", "out", "**/*.test.ts"]
 }
