@@ -128,7 +128,7 @@ jobs:
                   echo "Minimum requirements: 80% lines, 80% functions, 70% branches"
 
             - name: �📤 Upload coverage to Codecov
-              uses: codecov/codecov-action@v3
+              uses: codecov/codecov-action@v5
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
                   files: ./packages/*/coverage/lcov.info,./apps/*/coverage/lcov.info
