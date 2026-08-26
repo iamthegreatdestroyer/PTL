@@ -4,8 +4,8 @@
   "private": true,
   "description": "Probabilistic Type Lattice - Bayesian type inference with confidence intervals",
   "author": {
-    "name": "Stevo",
-    "email": "sgbilod@iamthegreatdestroyer.com"
+    "name": "Stephen Bilodeau",
+    "email": "sgbilod@gmail.com"
   },
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
